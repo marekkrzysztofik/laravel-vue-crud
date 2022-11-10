@@ -1,8 +1,6 @@
 <script setup>
-
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-
 const router = useRouter()
 
 let products = ref([])
@@ -19,13 +17,15 @@ const getProducts = async () => {
     let response = await axios.get("/api/get_all_product")
     products.value = response.data.products
     }
-
-    const ourImage = (img) => {
+const ourImage = (img) => {
         return "/upload/"+img
     }
 
-</script>
+const onEdit = (id) => {
+    router.push('/product/edit/'+id)
+}
 
+</script>
 <template>
     <div class="container">
         <div class="products__list table  my-3">
@@ -70,7 +70,7 @@ const getProducts = async () => {
                     {{ item.quantity }}
                   </p>     
                   <div>     
-                      <button class="btn-icon btn-icon-success" >
+                      <button class="btn-icon btn-icon-success" @click="onEdit(item.id)">
                           <i class="fas fa-pencil-alt"></i>
                       </button>
                       <button class="btn-icon btn-icon-danger" >
