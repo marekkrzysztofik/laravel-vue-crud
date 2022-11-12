@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import adminProductIndex from '../components/admin/index.vue'
 import productIndex from '../components/products/index.vue'
-import productNew from '../components/products/new.vue'
+import productNew from '../components/admin/new.vue'
 import notFound from '../components/notFound.vue'
-import productEdit from '../components/products/edit.vue'
+import productEdit from '../components/admin/edit.vue'
+import login from '../components/auth/login.vue'
 
 const routes =  [{
         path: '/',
@@ -11,13 +12,21 @@ const routes =  [{
 
     },
     {
-        path: '/product/new',
+        path: '/admin/',
+        component: adminProductIndex
+    },
+    {
+        path: '/admin/new',
         component: productNew
     },
     {
-        path: '/product/edit/:id',
+        path: '/admin/edit/:id',
         component: productEdit,
         props: true
+    },
+    {
+        path: '/login',
+        component: login
     },
     {
         path:'/:pathMatch(.*)*',

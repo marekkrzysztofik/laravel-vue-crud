@@ -65,7 +65,7 @@ public function update_product(Request $request, $id){
         if(file_exists($image)){
             @unlink($image);
         }
-
+ 
     } else{
         $name = $product->photo;
     }

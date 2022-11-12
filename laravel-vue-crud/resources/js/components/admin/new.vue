@@ -60,7 +60,7 @@ const saveProduct = () => {
         form.value.quantity='',
         form.value.price='',
 
-        router.push('/')
+        router.push('/admin/')
 
         toast.fire({
             icon:"success",
