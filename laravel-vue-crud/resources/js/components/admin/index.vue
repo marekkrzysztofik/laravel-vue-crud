@@ -4,6 +4,11 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
+const logout = () => {
+    localStorage.removeItem('token')
+    router.push('/')
+}
+
 let products = ref([])
 
 onMounted(async () => {
@@ -63,22 +68,37 @@ const deleteProduct = (id) => {
 
 </script>
 <template>
-     <h1>Welcome to admin overview</h1>
+    
+     
     <div class="container">
-        <div class="products__list table  my-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
+        
+        <router-link to="/" class="navbar-brand"> Home page</router-link>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+            <li class="nav-item">
+            <router-link to='/register' class="nav-link">Register</router-link>
+            </li>
+</ul>
+<span class="navbar-text">
+    No siema
+  </span>
+</nav>
+<h1>Welcome to admin overview</h1>
+        <div class="products__list table  my-3 bg-grey">
               
               <div class="customers__titlebar dflex justify-content-between align-items-center">
                   <div class="customers__titlebar--item">
                       <h1 class="my-1">Products</h1>
                   </div>
                   <div class="customers__titlebar--item">
-                      <button class="btn btn-secondary my-1" @click="newProduct" >
+                      <button class="btn btn-sec my-1" @click="newProduct" >
                           Add Product
                       </button>
                   </div>
                   <div class="customers__titlebar--item">
-                      <button class="btn btn-secondary my-1" @click="login" >
-                          Login
+                      <button class="btn btn-sec my-1" @click="logout" >
+                          Logout
                       </button>
                   </div>
               </div>
@@ -127,3 +147,11 @@ const deleteProduct = (id) => {
           </div>
     </div>
 </template>
+
+<style>
+h1 {
+ text-align: center;
+ margin-top: 3%;
+ font-weight: 700;
+}
+</style>

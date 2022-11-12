@@ -1,5 +1,5 @@
 <script setup>
-
+ 
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -77,6 +77,19 @@ const saveProduct = () => {
 
 <template>
     <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
+        
+        <router-link to="/" class="navbar-brand"> Home page</router-link>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+            <li class="nav-item">
+            <router-link to='/register' class="nav-link">Register</router-link>
+            </li>
+</ul>
+<span class="navbar-text">
+    No siema
+  </span>
+</nav>
         <div class="products__create ">
     
     <div class="products__create__titlebar dflex justify-content-between align-items-center">
@@ -86,7 +99,7 @@ const saveProduct = () => {
         </div>
         <div class="products__create__titlebar--item">
             
-            <button class="btn btn-secondary ml-1" @click="saveProduct()">
+            <button class="btn ml-1" @click="saveProduct()">
                 Save
             </button>
         </div>
@@ -151,7 +164,7 @@ const saveProduct = () => {
     <!-- Footer Bar -->
     <div class="dflex justify-content-between align-items-center my-3">
         <p ></p>
-        <button class="btn btn-secondary" @click="saveProduct()">Save</button>
+        <button class="btn" @click="saveProduct()">Save</button>
     </div>
 
 </div>
