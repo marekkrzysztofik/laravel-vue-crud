@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Image; 
@@ -19,7 +18,7 @@ public function addProduct(Request $request) {
     $product->name = $request->name;
     $product->description = $request->description;
 
-    if($request->photo!=""){
+    if($request->photo) {
         $strpos = strpos($request->photo,';');
         $sub = substr($request->photo,0,$strpos);
         $ex = explode('/', $sub)[1];
