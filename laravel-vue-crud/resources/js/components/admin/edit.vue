@@ -75,7 +75,7 @@ const updateProduct = () => {
             form.value.type='',
             form.value.quantity='',
             form.value.price='',
-
+ 
             router.push('/')
 
             toast.fire({
@@ -98,7 +98,7 @@ const updateProduct = () => {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             
             <li class="nav-item">
-            <router-link to='/register' class="nav-link">Register</router-link>
+            <router-link to='/Register' class="nav-link">Register</router-link>
             </li>
             
 </ul>

@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Image; 
-
+  
 class ProductController extends Controller
 {
-    public function get_all_product() {
+    public function getProducts() {
         $products = Product::all();
         return response() -> json([
             'products' => $products
         ], 200);
     }
-public function add_product(Request $request) {
+public function addProduct(Request $request) {
     $product = new Product();
     $product->name = $request->name;
     $product->description = $request->description;

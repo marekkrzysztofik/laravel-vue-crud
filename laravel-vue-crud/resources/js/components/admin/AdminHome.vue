@@ -16,15 +16,15 @@ onMounted(async () => {
 })
 
 const newProduct = () => {
-    router.push('/admin/new') 
+    router.push('/Admin/New') 
 }
 
 const login = () => {
-    router.push('/login') 
+    router.push('/Login') 
 }
 
 const getProducts = async () => {
-    let response = await axios.get("/api/get_all_product")
+    let response = await axios.get("/api/getProducts")
     products.value = response.data.products
     }
 const ourImage = (img) => {
@@ -32,7 +32,7 @@ const ourImage = (img) => {
     }
 
 const onEdit = (id) => {
-    router.push('/admin/edit/'+id)
+    router.push('/Admin/Edit/'+id)
 }
 
 const deleteProduct = (id) => {
@@ -77,7 +77,7 @@ const deleteProduct = (id) => {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             
             <li class="nav-item">
-            <router-link to='/register' class="nav-link">Register</router-link>
+            <router-link to='/Register' class="nav-link">Register</router-link>
             </li>
 </ul>
 <span class="navbar-text">

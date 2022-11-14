@@ -1,11 +1,7 @@
 <template>
-    
-    
     <router-view/>
 </template>
-
 <style>
-
 .pasek{
     padding: 1%;
     width: 100%;

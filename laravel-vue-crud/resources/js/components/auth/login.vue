@@ -9,7 +9,7 @@ let form= reactive({
     email: '',
     password: '',
 })
- 
+  
 let error = ref('')
 
 const login = async() =>{
@@ -34,7 +34,7 @@ const login = async() =>{
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             
             <li class="nav-item">
-            <router-link to='/register' class="nav-link">Register</router-link>
+            <router-link to='/Register' class="nav-link">Register</router-link>
             </li>
 </ul>
 <span class="navbar-text">

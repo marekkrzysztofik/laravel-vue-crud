@@ -50,8 +50,8 @@ const saveProduct = () => {
     formData.append('type', form.value.type) 
     formData.append('quantity', form.value.quantity)
     formData.append('price', form.value.price)
-
-    axios.post("/api/add_product/", formData)
+ 
+    axios.post("/api/addProduct/", formData)
     .then((response)=> {
         form.value.name='',
         form.value.description='',
@@ -60,7 +60,7 @@ const saveProduct = () => {
         form.value.quantity='',
         form.value.price='',
 
-        router.push('/admin/')
+        router.push('/Admin/')
 
         toast.fire({
             icon:"success",
@@ -69,7 +69,7 @@ const saveProduct = () => {
 
     })
     .catch((error) => {
-
+        
     })
 }
 
@@ -83,7 +83,7 @@ const saveProduct = () => {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             
             <li class="nav-item">
-            <router-link to='/register' class="nav-link">Register</router-link>
+            <router-link to='/Register' class="nav-link">Register</router-link>
             </li>
 </ul>
 <span class="navbar-text">

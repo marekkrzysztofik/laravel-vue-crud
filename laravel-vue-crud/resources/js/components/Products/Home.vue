@@ -5,10 +5,10 @@
         <router-link to="/" class="navbar-brand"> Home page</router-link>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-            <router-link to='/login' class="nav-link">Login</router-link>
+            <router-link to='/Login' class="nav-link">Login</router-link>
             </li>
             <li class="nav-item">
-            <router-link to='/register' class="nav-link">Register</router-link>
+            <router-link to='/Register' class="nav-link">Register</router-link>
             </li>
 </ul>
 <span class="navbar-text">

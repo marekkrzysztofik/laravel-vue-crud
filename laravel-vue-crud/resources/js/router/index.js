@@ -1,39 +1,39 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import adminProductIndex from '../components/admin/index.vue'
-import productIndex from '../components/products/index.vue'
-import productNew from '../components/admin/new.vue'
-import notFound from '../components/notFound.vue'
-import productEdit from '../components/admin/edit.vue'
-import login from '../components/auth/login.vue'
-import register from '../components/auth/register.vue'
-
+import AdminHome from '../components/Admin/AdminHome.vue'
+import Home from '../components/Products/Home.vue'
+import New from '../components/Admin/New.vue'
+import NotFound from '../components/NotFound.vue'
+import productEdit from '../components/Admin/Edit.vue'
+import login from '../components/Auth/Login.vue'
+import register from '../components/Auth/Register.vue'
+ 
 const routes =  [{
         path: '/',
         name: 'Home',
-        component: productIndex,
+        component: Home,
         meta:{
             requiresAuth:false
         }
 
     },
     {
-        path: '/admin/',
-        component: adminProductIndex,
+        path: '/Admin/',
+        component: AdminHome,
         name: 'AdminHome',
         meta:{
             requiresAuth:true
         }
     },
     {
-        path: '/admin/new',
-        component: productNew,
+        path: '/Admin/New',
+        component: New,
         name: 'New',
         meta:{
             requiresAuth:true
         }
     },
     {
-        path: '/admin/edit/:id',
+        path: '/Admin/Edit/:id',
         component: productEdit,
         name:'Edit',
         props: true,
@@ -42,7 +42,7 @@ const routes =  [{
         }
     },
     {
-        path: '/login',
+        path: '/Login',
         name: 'Login',
         component: login,
         meta:{
@@ -51,7 +51,7 @@ const routes =  [{
         
     },
     {                
-         path: '/register',
+         path: '/Register',
         name: 'Register',
         component: register,
         meta:{
@@ -60,8 +60,8 @@ const routes =  [{
     },
     {
         path:'/:pathMatch(.*)*',
-        name: 'notFound',
-        component:notFound,
+        name: 'NotFound',
+        component:NotFound,
         meta:{
             requiresAuth:false
         }
