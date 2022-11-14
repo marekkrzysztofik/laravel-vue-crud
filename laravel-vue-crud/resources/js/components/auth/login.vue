@@ -92,15 +92,15 @@
 import { ref } from 'vue'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-
+ 
 const router= useRouter()
 
-let form= reactive({
+const form= reactive({
     email: '',
     password: '',
 })
   
-let error = ref('')
+const error = ref('')
 
 const login = async() =>{
     await axios.post('/api/login', form)

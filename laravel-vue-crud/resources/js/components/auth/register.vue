@@ -87,17 +87,17 @@
 import { ref } from 'vue'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-
+ 
 const router= useRouter()
 
-let form= reactive({
+const form= reactive({
     name:'',
     email: '',
     password: '',
     c_password: '',
 })
 
-let errors = ref([])
+const errors = ref([])
 
 const register = async() =>{
     

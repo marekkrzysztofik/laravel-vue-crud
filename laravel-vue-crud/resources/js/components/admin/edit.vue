@@ -102,7 +102,7 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 
-let form = ref({
+const form = ref({
     id:'',
     name:'',
     description:'',
@@ -131,7 +131,7 @@ let photo = "/upload/image.png"
     if(form.value.photo) {
     if(form.value.photo.indexOf('base64') != -1) {
         photo = form.value.photo
-    } else{
+    } else {
         photo = `/upload/${form.value.photo}`
     }
 }
@@ -140,9 +140,9 @@ return photo
 
 const updatePhoto = (e) => {
 
-let file= e.target.files[0];
-let reader = new FileReader();
-let limit = 1024 * 1024 *2;
+const file= e.target.files[0];
+const reader = new FileReader();
+const limit = 1024 * 1024 *2;
 if(file['size']> limit) {
     return false
 }
@@ -153,7 +153,7 @@ reader.readAsDataURL(file);
 }
 
 const getSingleProduct = async () => {
-    let response = await axios.get(`/api/editProduct/${props.id}`) 
+    const response = await axios.get(`/api/editProduct/${props.id}`) 
     form.value = response.data.product
 }
 

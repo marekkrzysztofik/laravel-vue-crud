@@ -93,13 +93,13 @@
 </div>
     </div>
 </template>
-
+ 
 <script setup>
  
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-let form = ref({
+const form = ref({
     name:'',
     description:'',
     photo:'', 
@@ -125,9 +125,9 @@ const getPhoto = () => {
 }
 const updatePhoto = (e) => {
 
-    let file= e.target.files[0];
-    let reader = new FileReader();
-    let limit = 1024 * 1024 *2;
+    const file= e.target.files[0];
+    const reader = new FileReader();
+    const limit = 1024 * 1024 *2;
     if(file['size']> limit) {
         return false
     }
