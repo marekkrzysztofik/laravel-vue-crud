@@ -1,31 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router= useRouter()
-
-let form= reactive({
-    email: '',
-    password: '',
-})
-  
-let error = ref('')
-
-const login = async() =>{
-    await axios.post('/api/login', form)
-        .then(response=>{
-            if(response.data.success) {
-                localStorage.setItem('token', response.data.data.token)
-                router.push('/Admin/')
-            } else {
-                error.value = response.data.message;
-            }
-        })
-}
-
-</script>
-
 <template>
     <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
@@ -115,3 +87,32 @@ const login = async() =>{
     font-size: 16px;
 }
 </style>
+
+<script setup>
+import { ref } from 'vue'
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router= useRouter()
+
+let form= reactive({
+    email: '',
+    password: '',
+})
+  
+let error = ref('')
+
+const login = async() =>{
+    await axios.post('/api/login', form)
+        .then(response=>{
+            if(response.data.success) {
+                localStorage.setItem('token', response.data.data.token)
+                router.push('/Admin/')
+            } else {
+                error.value = response.data.message;
+            }
+        })
+}
+
+</script>
+

@@ -1,95 +1,3 @@
-<script setup>
-
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router'
-
-let form = ref({
-    id:'',
-    name:'',
-    description:'',
-    photo:'', 
-    type:'', 
-    quantity:'', 
-    price:''
-
-})
-
-onMounted(async () => {
-    getSingleProduct()
-})
-
-const props = defineProps({
-    id:{
-        type:String,
-        default:''
-    }
-})
-const router = useRouter()
-
-const getPhoto = () => {
-
-let photo = "/upload/image.png"
-if(form.value.photo){
-    if(form.value.photo.indexOf('base64') != -1) {
-        photo = form.value.photo
-    } else{
-        photo = `/upload/${form.value.photo}`
-    }
-}
-return photo
-}
-
-const updatePhoto = (e) => {
-
-let file= e.target.files[0];
-let reader = new FileReader();
-let limit = 1024 * 1024 *2;
-if(file['size']> limit) {
-    return false
-}
-reader.onloadend = (file) => {
-    form.value.photo = reader.result;
-}
-reader.readAsDataURL(file);
-}
-
-const getSingleProduct = async () => {
-    let response = await axios.get(`/api/editProduct/${props.id}`) 
-    form.value = response.data.product
-}
-
-const updateProduct = () => {
-    const formData = new FormData()
-    formData.append('name', form.value.name)
-    formData.append('description', form.value.description)
-    formData.append('photo', form.value.photo)
-    formData.append('type', form.value.type) 
-    formData.append('quantity', form.value.quantity)
-    formData.append('price', form.value.price)
-
-    axios.post(`/api/updateProduct/${form.value.id}`, formData)
-        .then((response)=> {
-            form.value.name='',
-            form.value.description='',
-            form.value.photo='',
-            form.value.type='',
-            form.value.quantity='',
-            form.value.price='',
- 
-            router.push('/')
-
-            toast.fire({
-            icon:"success",
-            title:"Product edited successfully"
-        })
-    })
-    .catch((error) => {
-
-    })    
-
-}
-</script>
-
 <template>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
@@ -188,3 +96,96 @@ const updateProduct = () => {
 </div>
     </div>
 </template>
+
+<script setup>
+
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router'
+
+let form = ref({
+    id:'',
+    name:'',
+    description:'',
+    photo:'', 
+    type:'', 
+    quantity:'', 
+    price:''
+
+})
+
+onMounted(async () => {
+    getSingleProduct()
+})
+
+const props = defineProps({
+    id:{
+        type:String,
+        default:''
+    }
+})
+const router = useRouter()
+
+const getPhoto = () => {
+
+let photo = "/upload/image.png"
+    if(form.value.photo) {
+    if(form.value.photo.indexOf('base64') != -1) {
+        photo = form.value.photo
+    } else{
+        photo = `/upload/${form.value.photo}`
+    }
+}
+return photo
+}
+
+const updatePhoto = (e) => {
+
+let file= e.target.files[0];
+let reader = new FileReader();
+let limit = 1024 * 1024 *2;
+if(file['size']> limit) {
+    return false
+}
+reader.onloadend = (file) => {
+    form.value.photo = reader.result;
+}
+reader.readAsDataURL(file);
+}
+
+const getSingleProduct = async () => {
+    let response = await axios.get(`/api/editProduct/${props.id}`) 
+    form.value = response.data.product
+}
+
+const updateProduct = () => {
+    const formData = new FormData()
+    formData.append('name', form.value.name)
+    formData.append('description', form.value.description)
+    formData.append('photo', form.value.photo)
+    formData.append('type', form.value.type) 
+    formData.append('quantity', form.value.quantity)
+    formData.append('price', form.value.price)
+
+    axios.post(`/api/updateProduct/${form.value.id}`, formData)
+        .then((response)=> {
+            form.value.name='',
+            form.value.description='',
+            form.value.photo='',
+            form.value.type='',
+            form.value.quantity='',
+            form.value.price='',
+ 
+            router.push('/')
+
+            toast.fire({
+            icon:"success",
+            title:"Product edited successfully"
+        })
+    })
+    .catch((error) => {
+
+    })    
+
+}
+</script>
+
