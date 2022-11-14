@@ -7,7 +7,7 @@ use Image;
   
 class ProductController extends Controller {
     public function getProducts() {
-        $products = Product::all();
+        return Product::all();
         return response() -> json([
             'products' => $products
         ], 200);
