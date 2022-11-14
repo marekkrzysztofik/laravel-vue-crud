@@ -114,7 +114,7 @@ const login = () => {
 
 const getProducts = async () => {
     let response = await axios.get("/api/getProducts")
-    products.value = response.data.products
+    products.value = response.data
     }
 const ourImage = (img) => {
         return `/upload/${img}`
