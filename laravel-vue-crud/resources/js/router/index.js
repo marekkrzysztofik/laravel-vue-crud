@@ -4,8 +4,8 @@ import Home from '../components/Products/Home.vue'
 import New from '../components/Admin/New.vue'
 import NotFound from '../components/NotFound.vue'
 import productEdit from '../components/Admin/Edit.vue'
-import login from '../components/Auth/Login.vue'
-import register from '../components/Auth/Register.vue'
+import Login from '../components/Auth/Login.vue'
+import Register from '../components/Auth/Register.vue'
  
 const routes =  [{
         path: '/',
@@ -44,7 +44,7 @@ const routes =  [{
     {
         path: '/Login',
         name: 'Login',
-        component: login,
+        component: Login,
         meta:{
             requiresAuth:false
         }
@@ -53,7 +53,7 @@ const routes =  [{
     {                
          path: '/Register',
         name: 'Register',
-        component: register,
+        component: Register,
         meta:{
             requiresAuth:false
         }

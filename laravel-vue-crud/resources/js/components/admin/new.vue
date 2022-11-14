@@ -19,10 +19,10 @@ const getPhoto = () => {
 
     let photo = "/upload/image.png"
     if(form.value.photo){
-        if(form.value.photo.indexOf('base64') != -1){
+        if(form.value.photo.indexOf('base64') != -1) {
             photo = form.value.photo
         } else{
-            photo = '/upload/'+form.value.photo
+            photo = `/upload/${form.value.photo}`
         }
     }
     return photo
@@ -51,7 +51,7 @@ const saveProduct = () => {
     formData.append('quantity', form.value.quantity)
     formData.append('price', form.value.price)
  
-    axios.post("/api/addProduct/", formData)
+    axios.post("/api/addProduct", formData)
     .then((response)=> {
         form.value.name='',
         form.value.description='',
@@ -137,7 +137,7 @@ const saveProduct = () => {
         <div class="products__create__sidebar">
             <!-- Product Organization -->
             <div class="card py-2 px-2 bg-white">
-                
+                 
                 <!-- Product unit -->
                 <div class="my-3">
                     <p>Product type</p>

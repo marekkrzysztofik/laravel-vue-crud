@@ -28,11 +28,11 @@ const getProducts = async () => {
     products.value = response.data.products
     }
 const ourImage = (img) => {
-        return "/upload/"+img
+        return `/upload/${img}`
     }
 
 const onEdit = (id) => {
-    router.push('/Admin/Edit/'+id)
+    router.push(`/Admin/Edit/${id}`)
 }
 
 const deleteProduct = (id) => {
@@ -48,7 +48,7 @@ const deleteProduct = (id) => {
     })
     .then((result) =>{
         if(result.value){
-            axios.get('/api/deleteProduct/'+id)
+            axios.get(`/api/deleteProduct/${id}`)
               .then(()=>{
                 Swal.fire(
                     'Delete',

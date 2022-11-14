@@ -20,7 +20,7 @@ const register = async() =>{
         .then(response=>{
             if(response.data.success) {
                 localStorage.setItem('token', response.data.data.token)
-                router.push('/Login')
+                router.push('/')
             } 
 
 

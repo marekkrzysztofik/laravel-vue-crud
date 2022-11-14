@@ -17,7 +17,7 @@ const login = async() =>{
         .then(response=>{
             if(response.data.success) {
                 localStorage.setItem('token', response.data.data.token)
-                router.push('/admin/')
+                router.push('/Admin/')
             } else {
                 error.value = response.data.message;
             }

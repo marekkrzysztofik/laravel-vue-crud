@@ -2,7 +2,7 @@
   
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductControl;
+
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\API\AuthController;
 
@@ -19,5 +19,5 @@ Route::get('/editProduct/{id}',[ProductController::class, 'editProduct']);
 Route::post('/updateProduct/{id}', [ProductController::class, 'updateProduct']);
 Route::get('/deleteProduct/{id}', [ProductController::class, 'deleteProduct']);
 
-Route::post('Register', [AuthController::class, 'register']);
-Route::post('Login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
