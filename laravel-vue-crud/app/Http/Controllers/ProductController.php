@@ -40,14 +40,14 @@ public function addProduct(Request $request) {
     $product->save();
 }
 
-public function get_edit_product($id){
+public function editProduct($id){
     $product = Product::find($id);
     return response()-> json([
         'product' => $product
     ], 200);
 }
 
-public function update_product(Request $request, $id){
+public function updateProduct(Request $request, $id){
     $product = Product::find($id);
 
     $product->name = $request->name;
@@ -76,7 +76,7 @@ public function update_product(Request $request, $id){
     $product->save();
 }
 
-public function delete_product(Request $request, $id) {
+public function deleteProduct(Request $request, $id) {
     $product = Product::findOrFail($id);
     $image_path = public_path()."/upload/";
     $image = $image_path. $product->photo;

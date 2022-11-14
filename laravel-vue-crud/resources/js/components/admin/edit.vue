@@ -54,7 +54,7 @@ reader.readAsDataURL(file);
 }
 
 const getSingleProduct = async () => {
-    let response = await axios.get(`/api/get_edit_product/${props.id}`) 
+    let response = await axios.get(`/api/editProduct/${props.id}`) 
     form.value = response.data.product
 }
 
@@ -67,7 +67,7 @@ const updateProduct = () => {
     formData.append('quantity', form.value.quantity)
     formData.append('price', form.value.price)
 
-    axios.post(`/api/update_product/${form.value.id}`, formData)
+    axios.post(`/api/updateProduct/${form.value.id}`, formData)
         .then((response)=> {
             form.value.name='',
             form.value.description='',
