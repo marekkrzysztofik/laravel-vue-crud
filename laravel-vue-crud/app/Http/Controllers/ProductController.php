@@ -11,7 +11,7 @@ class ProductController extends Controller {
         return response() -> json([
             'products' => $products
         ], 200);
-    }
+    }  
 public function addProduct(Request $request) {
         $product = new Product();
         $product->name = $request->name;
@@ -30,8 +30,6 @@ public function addProduct(Request $request) {
     else {
         $product->photo = "image.png";
     }
-    
-        $product->photo = $name;
         $product->type = $request->type;
         $product->quantity = $request->quantity;
         $product->price = $request->price;

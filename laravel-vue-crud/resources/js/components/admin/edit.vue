@@ -183,7 +183,7 @@ const updateProduct = () => {
         })
     })
     .catch((error) => {
-
+        Swal.fire('Failed!', 'There was something wrong.', "Warning")
     })    
 
 }

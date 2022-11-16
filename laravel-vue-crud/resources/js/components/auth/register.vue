@@ -1,8 +1,20 @@
 <template>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
+        
+        <router-link to="/" class="navbar-brand"> Home page</router-link>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+            <li class="nav-item">
+            <router-link to='/Register' class="nav-link">Register</router-link>
+            </li>
+</ul>
+<span class="navbar-text">
+    No siema
+  </span>
+</nav>
     <div class="login">
         <div class="loginp">
-
-            
         <form @submit.prevent="register">
             <input class="inp form-label" type="name" placeholder="Enter your name" v-model="form.name"/>
             <br>
@@ -12,8 +24,6 @@
             <br>
             <input class="inp" type="password" placeholder="Confirm your password" v-model="form.c_password"/>
             <br>
-            
-            
             <input class="inp sub" type="submit" value="Register" @click="register()"/>
         </form>
         <p class="text-danger" v-for="error in errors" :key="error">
@@ -21,43 +31,10 @@
             </p>    
     </div>
     </div>
+</div>
 </template>
 
 <style>
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
-}
-.login{
-    
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-    }
-.loginp{
-    
-    width: 22.8em;
-    height: 55em;
-    border-radius: 15%;
-    padding: 20px;
-    display: flex;
-    margin: 0 auto 0 auto;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    
-}
-.inp{
-    
-    border: none;
-    padding: 1.25rem;
-    width: 20em;
-    margin: 0.5em;
-    font-size: 16px;
-}
 .inp:hover{
     background-color: azure;
 }

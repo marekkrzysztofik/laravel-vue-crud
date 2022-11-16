@@ -98,8 +98,13 @@
  
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
-const form = ref({
+/*const initialForm = { name:'',
+                        description:'',
+                            photo:'', 
+                            type:'', 
+                        quantity:'', 
+                        price:'' }*/
+const form = ref({   
     name:'',
     description:'',
     photo:'', 
@@ -157,15 +162,16 @@ const saveProduct = () => {
         form.value.price='',
 
         router.push('/Admin/')
-
+        
         toast.fire({
             icon:"success",
             title:"Product add successfully"
+           
         })
 
     })
     .catch((error) => {
-        
+        Swal.fire('Failed!', 'There was something wrong.', "Warning")
     })
 }
 
