@@ -6,7 +6,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             
             <li class="nav-item">
-            <router-link to='/Register' class="nav-link">Register</router-link>
+            <router-link to='/Login' class="nav-link">Login</router-link>
             </li>
 </ul>
 <span class="navbar-text">
@@ -34,31 +34,7 @@
 </div>
 </template>
 
-<style>
-.inp:hover{
-    background-color: azure;
-}
-.inp:focus{
-    background-color: azure;
-}
-.sub{
-    background-color: azure;
-    cursor: pointer;
-    margin: 2em 0 0 5.5em;
-    width: 10em;
-}
-.sub:hover{
-    background-color: rgb(161, 211, 255); 
-}
-.sub:focus{
-    background-color: rgb(14, 142, 255); 
-}
 
-.text-danger{
-    color: red;
-    font-size: 16px;
-}
-</style>
 
 <script setup>
 import { ref } from 'vue'
