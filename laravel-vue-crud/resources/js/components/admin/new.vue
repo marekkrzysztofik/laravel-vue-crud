@@ -171,7 +171,7 @@ const saveProduct = () => {
 
     })
     .catch((error) => {
-        Swal.fire('Failed!', 'There was something wrong.', "Warning")
+        Swal.fire('Failed!', 'There was something wrong. Check if you filled name of the product.', "Warning")
     })
 }
 
