@@ -29,10 +29,19 @@ import 'primeicons/primeicons.css'; //icons
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import TabMenu from 'primevue/tabmenu';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
+import Row from 'primevue/row';                     //optional for row
+
 const app = createApp(App);
 
 app.use(router);
 app.use(PrimeVue);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
 app.component('TabMenu', TabMenu);
 app.component('Button', Button);
 app.component('Dialog', Dialog);

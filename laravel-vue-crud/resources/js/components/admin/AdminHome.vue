@@ -1,80 +1,58 @@
 <template>
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
-      <router-link to="/" class="navbar-brand"> Home page</router-link>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <router-link to="/Register" class="nav-link">Register</router-link>
-        </li>
-      </ul>
-      <span class="navbar-text"> No siema </span>
-    </nav>
-    <h1>Welcome to admin overview</h1>
-    <div class="products__list table my-3 bg-grey">
-      <div
-        class="customers__titlebar dflex justify-content-between align-items-center">
-        <div class="customers__titlebar--item">
-          <h1 class="my-1">Products</h1>
-        </div>
-        <div class="customers__titlebar--item">
-          <button class="btn btn-sec my-1" @click="newProduct">
-            Add Product
-          </button>
-        </div>
-        <div class="customers__titlebar--item">
-          <button class="btn btn-sec my-1" @click="logout">Logout</button>
-        </div>
-      </div>
-
-      <div
-        class="table--heading mt-2 products__list__heading"
-        style="padding-top: 20px; background: #fff">
-        <!-- <p class="table--heading--col1">&#32;</p> -->
-        <p class="table--heading--col1">image</p>
-        <p class="table--heading--col2">Product</p>
-        <p class="table--heading--col4">Type</p>
-        <p class="table--heading--col3">Inventory</p>
-        <!-- <p class="table--heading--col5">&#32;</p> -->
-        <p class="table--heading--col5">actions</p>
-      </div>
-
-      <!-- product 1 -->
-      <div
-        class="table--items products__list__item"
-        v-for="item in products"
-        :key="item.id"
-        v-if="products.length > 0">
-        <div class="products__list__item--imgWrapper">
-          <img
-            class="products__list__item--img"
-            :src="ourImage(item.photo)"
-            style="height: 40px"
-            v-if="item.photo" />
-        </div>
-        <a href="# " class="table--items--col2">
-          {{ item.name }}
-        </a>
-        <p class="table--items--col2">
-          {{ item.type }}
-        </p>
-        <p class="table--items--col3">
-          {{ item.quantity }}
-        </p>
-        <div>
-          <button class="btn-icon btn-icon-success" @click="onEdit(item.id)">
-            <i class="fas fa-pencil-alt"></i>
-          </button>
-          <button
-            class="btn-icon btn-icon-danger"
-            @click="deleteProduct(item.id)">
-            <i class="far fa-trash-alt"></i>
-          </button>
-        </div>
-      </div>
-      <div class="table--items products__list__item" v-else>
-        <p>Product not found</p>
-      </div>
+    <div class="card">
+      <TabMenu :model="items">
+        
+      </TabMenu> 
+      <router-view />
     </div>
+
+    <DataTable :value="products" responsiveLayout="scroll">
+      <template #header>
+        <div class="table-header">
+          Products <button @click="logout">siema</button>
+          <Button icon="pi pi-refresh" />
+        </div>
+      </template>
+       
+      <Column header="Image">
+        <template #body="slotProps">
+          <img
+            src="ourImage(item.photo)"
+            :alt="slotProps.data.image"
+            v-if="item.photo"
+            class="products__list__item--img" />
+        </template>
+      </Column>
+      <Column field="name" header="Name">{{ item.name }}</Column>
+      <Column field="price" header="Price">
+        <template #body="slotProps">
+          {{ formatCurrency(slotProps.data.price) }}
+        </template>
+      </Column>
+      <Column field="rating" header="Reviews">
+        <template #body="slotProps">
+          <Rating
+            :modelValue="slotProps.data.rating"
+            :readonly="true"
+            :cancel="false" />
+        </template>
+      </Column>
+      <Column header="Status">
+        <template #body="slotProps">
+          <span
+            :class="
+              'product-badge status-' +
+              slotProps.data.inventoryStatus.toLowerCase()
+            "
+            >{{ slotProps.data.inventoryStatus }}</span
+          >
+        </template>
+      </Column>
+      <template #footer>
+        In total there are {{ products ? products.length : 0 }} products.
+      </template>
+    </DataTable>
   </div>
 </template>
 
@@ -93,7 +71,7 @@ const router = useRouter();
 
 const logout = () => {
   localStorage.removeItem('token');
-  router.push('/');
+  router.push('/Login');
 };
 
 const products = ref([]);
@@ -121,7 +99,7 @@ const ourImage = img => {
 const onEdit = id => {
   router.push(`/Admin/Edit/${id}`);
 };
- 
+
 const deleteProduct = id => {
   Swal.fire({
     title: 'Are you sure?',
@@ -147,3 +125,62 @@ const deleteProduct = id => {
   });
 };
 </script>
+<script>
+export default {
+  data() {
+    return {
+      active: 3,
+      items: [
+        {
+          label: 'Home',
+          icon: 'pi pi-home',
+          to: '/',
+        },
+        {
+          label: 'Login',
+          icon: 'pi pi-user',
+          to: '/Login',
+        },
+        {
+          label: 'Register',
+          icon: 'pi pi-user-plus',
+          to: '/Register',
+        },
+        {
+          label: 'Documentation',
+          icon: 'pi pi-fw pi-file',
+          to: '/',
+          
+        },
+        {
+          label: 'Settings',
+          icon: 'pi pi-fw pi-cog',
+          to: '/settings',
+        },
+      ],
+    };
+  },
+};
+</script>
+<!--
+<script>
+
+import ProductService from './service/ProductService';
+
+export default {
+    setup() {
+        onMounted(() => {
+            productService.value.getProductsSmall().then(data => products.value = data);
+        })
+
+        const products = ref();
+        const productService = ref(new ProductService());
+
+        const formatCurrency = (value) => {
+            return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+        };
+
+        return { products, formatCurrency }
+    }
+}
+</script>  -->
