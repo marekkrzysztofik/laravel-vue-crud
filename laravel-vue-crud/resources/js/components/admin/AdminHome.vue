@@ -121,7 +121,7 @@ const ourImage = img => {
 const onEdit = id => {
   router.push(`/Admin/Edit/${id}`);
 };
-
+ 
 const deleteProduct = id => {
   Swal.fire({
     title: 'Are you sure?',

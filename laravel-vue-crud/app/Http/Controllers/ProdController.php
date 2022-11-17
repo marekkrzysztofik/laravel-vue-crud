@@ -117,7 +117,7 @@ class ProdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         $product = Product::findOrFail($id);
         $image_path = public_path() . "/upload/";
