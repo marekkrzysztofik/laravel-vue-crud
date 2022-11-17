@@ -135,7 +135,7 @@ const deleteProduct = id => {
   }).then(result => {
     if (result.value) {
       axios
-        .get(`/api/products/${id}`)
+        .delete(`/api/products/${id}`)
         .then(() => {
           Swal.fire('Delete', 'Product delete successfully', 'success');
           getProducts();

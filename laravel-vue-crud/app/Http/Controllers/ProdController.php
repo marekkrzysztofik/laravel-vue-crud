@@ -64,7 +64,7 @@ class ProdController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
+        return Product::find($id);
     }
 
     /**
@@ -75,7 +75,7 @@ class ProdController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
+       
     }
 
     /**
@@ -91,7 +91,7 @@ class ProdController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
 
-        if ($product->photo != $request->photo) {
+        if ($request->photo && $product->photo != $request->photo) {
 
             $name = time() . ".png";
             $img = Image::make($request->photo)->resize(200, 200);
