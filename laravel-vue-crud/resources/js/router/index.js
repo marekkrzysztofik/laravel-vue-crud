@@ -24,7 +24,7 @@ const routes = [
       requiresAuth: true,
     },
   },
-  {
+  { //kebab-case
     path: '/Admin/New',
     component: New,
     name: 'New',

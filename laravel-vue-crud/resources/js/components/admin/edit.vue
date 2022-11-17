@@ -142,10 +142,7 @@ const getPhoto = () => {
 const updatePhoto = e => {
   const file = e.target.files[0];
   const reader = new FileReader();
-  const limit = 1024 * 1024 * 2;
-  if (file['size'] > limit) {
-    return false;
-  }
+  
   reader.onloadend = file => {
     form.value.photo = reader.result;
   };
@@ -153,7 +150,7 @@ const updatePhoto = e => {
 };
 
 const getSingleProduct = async () => {
-  const response = await axios.get(`/api/editProduct/${props.id}`);
+  const response = await axios.get(`/api/products/${props.id}`);
   form.value = response.data.product;
 };
 
@@ -167,7 +164,7 @@ const updateProduct = () => {
   formData.append('price', form.value.price);
 
   axios
-    .post(`/api/updateProduct/${form.value.id}`, formData)
+    .post(`/api/products/${form.value.id}`, formData)
     .then(response => {
       (form.value.name = ''),
         (form.value.description = ''),
@@ -175,7 +172,7 @@ const updateProduct = () => {
         (form.value.type = ''),
         (form.value.quantity = ''),
         (form.value.price = ''),
-        router.push('/');
+        router.push('/Admin/');
 
       toast.fire({
         icon: 'success',
@@ -186,7 +183,7 @@ const updateProduct = () => {
       Swal.fire(
         'Failed!',
         'There was something wrong. Check if you filled name of the product.',
-        'Warning'
+        'warning'
       );
     });
 };

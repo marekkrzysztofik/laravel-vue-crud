@@ -116,7 +116,7 @@ const form = ref({
   quantity: '',
   price: '',
 });
-
+ 
 const router = useRouter();
 
 const getPhoto = () => {
@@ -133,10 +133,7 @@ const getPhoto = () => {
 const updatePhoto = e => {
   const file = e.target.files[0];
   const reader = new FileReader();
-  const limit = 1024 * 1024 * 2;
-  if (file['size'] > limit) {
-    return false;
-  }
+
   reader.onloadend = file => {
     form.value.photo = reader.result;
   };
@@ -154,7 +151,7 @@ const saveProduct = () => {
   formData.append('price', form.value.price);
 
   axios
-    .post('/api/addProduct', formData)
+    .post('/api/products', formData)
     .then(response => {
       (form.value.name = ''),
         (form.value.description = ''),
@@ -173,7 +170,7 @@ const saveProduct = () => {
       Swal.fire(
         'Failed!',
         'There was something wrong. Check if you filled name of the product.',
-        'Warning'
+        'warning'
       );
     });
 };
