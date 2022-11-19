@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="card">
-      <TabMenu :model="items">
+      <TabMenu :model="items" @tab-change="logout">
         
       </TabMenu> 
       <router-view />
@@ -14,18 +14,19 @@
           <Button icon="pi pi-refresh" />
         </div>
       </template>
-       
-      <Column header="Image">
+      
+      <!-- <Column header="Image">
         <template #body="slotProps">
           <img
+          v-if="item.photo"
             src="ourImage(item.photo)"
             :alt="slotProps.data.image"
-            v-if="item.photo"
+            
             class="products__list__item--img" />
         </template>
-      </Column>
-      <Column field="name" header="Name">{{ item.name }}</Column>
-      <Column field="price" header="Price">
+      </Column> -->
+      <Column field="name" header="Name"></Column>
+      <!-- <Column field="price" header="Price">
         <template #body="slotProps">
           {{ formatCurrency(slotProps.data.price) }}
         </template>
@@ -48,7 +49,7 @@
             >{{ slotProps.data.inventoryStatus }}</span
           >
         </template>
-      </Column>
+      </Column> -->
       <template #footer>
         In total there are {{ products ? products.length : 0 }} products.
       </template>
@@ -69,9 +70,10 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-const logout = () => {
+const logout = (event, index) => {
   localStorage.removeItem('token');
   router.push('/Login');
+
 };
 
 const products = ref([]);
@@ -113,7 +115,7 @@ const deleteProduct = id => {
   }).then(result => {
     if (result.value) {
       axios
-        .get(`/api/products/${id}`)
+        .delete(`/api/products/${id}`)
         .then(() => {
           Swal.fire('Delete', 'Product delete successfully', 'success');
           getProducts();

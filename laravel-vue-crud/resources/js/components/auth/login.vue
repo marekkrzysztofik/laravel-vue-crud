@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="card">  
-            <TabMenu :model="items" />
+            <TabMenu :model="items"  />
             <router-view/>
         </div>
     <h1>Log in to continue</h1>

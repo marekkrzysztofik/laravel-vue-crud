@@ -131,8 +131,7 @@ const deleteProduct = id => {
     confirmButtonText: 'Yes, delete it!',
   }).then(result => {
     if (result.value) {
-      axios
-        .get(`/api/deleteProduct/${id}`)
+      axios.delete(`/api/deleteProduct/${id}`)
         .then(() => {
           Swal.fire('Delete', 'Product delete successfully', 'success');
           getProducts();

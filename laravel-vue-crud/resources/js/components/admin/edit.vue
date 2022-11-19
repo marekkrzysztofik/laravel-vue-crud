@@ -151,7 +151,7 @@ const updatePhoto = e => {
 
 const getSingleProduct = async () => {
   const response = await axios.get(`/api/products/${props.id}`);
-  form.value = response.data.product;
+  form.value = response.data;
 };
 
 const updateProduct = () => {
@@ -164,7 +164,7 @@ const updateProduct = () => {
   formData.append('price', form.value.price);
 
   axios
-    .post(`/api/products/${form.value.id}`, formData)
+    .patch(`/api/products/${form.value.id}`, formData)
     .then(response => {
       (form.value.name = ''),
         (form.value.description = ''),
