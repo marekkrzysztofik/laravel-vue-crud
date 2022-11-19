@@ -23,6 +23,8 @@ import PrimeVue from 'primevue/config';
 
 import Dialog from 'primevue/dialog';
 
+
+
 import 'primevue/resources/themes/saga-blue/theme.css'; //theme
 import 'primevue/resources/primevue.min.css'; //core css
 import 'primeicons/primeicons.css'; //icons
@@ -33,18 +35,23 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';                     //optional for row
-
+import Card from 'primevue/card';
+import Textarea from 'primevue/textarea';
+import Toolbar from 'primevue/toolbar';
 const app = createApp(App);
 
 app.use(router);
 app.use(PrimeVue);
 app.component('DataTable', DataTable);
+app.component('Card', Card);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
+app.component('Toolbar', Toolbar);
 app.component('TabMenu', TabMenu);
 app.component('Button', Button);
 app.component('Dialog', Dialog);
 app.component('InputText', InputText);
+app.component('Textarea', Textarea);
 app.mount('#app');
 

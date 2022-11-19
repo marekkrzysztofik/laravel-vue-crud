@@ -81,7 +81,7 @@ const register = async () => {
 export default {
   data() {
     return {
-      active: 3,
+      
       items: [
         {
           label: 'Home',

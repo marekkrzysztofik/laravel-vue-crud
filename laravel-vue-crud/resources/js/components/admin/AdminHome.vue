@@ -1,55 +1,45 @@
 <template>
   <div class="container">
     <div class="card">
-      <TabMenu :model="items" @tab-change="logout">
-        
-      </TabMenu> 
+      <TabMenu :model="items"> </TabMenu>
       <router-view />
     </div>
 
-    <DataTable :value="products" responsiveLayout="scroll">
-      <template #header>
-        <div class="table-header">
-          Products <button @click="logout">siema</button>
+    <DataTable  :value="products"  responsiveLayout="scroll">
+      <Toolbar>
+        <template #start>
           <Button icon="pi pi-refresh" />
-        </div>
-      </template>
-      
-      <!-- <Column header="Image">
-        <template #body="slotProps">
-          <img
-          v-if="item.photo"
-            src="ourImage(item.photo)"
-            :alt="slotProps.data.image"
-            
-            class="products__list__item--img" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          <Button label="Log out" @click="logout" class="p-button-rounded" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          <Button
+            label="Add Product"
+            @click="newProduct"
+            class="p-button-rounded" />
         </template>
-      </Column> -->
+      </Toolbar>
+
+      <template #header>Products </template>
+      <Column  field="id"  header="ID"></Column>
+      <Column  field=""  header="Image">
+        <template #body> 
+          <img class="products__list__item--img"  />
+        </template>
+      </Column>
       <Column field="name" header="Name"></Column>
-      <!-- <Column field="price" header="Price">
-        <template #body="slotProps">
-          {{ formatCurrency(slotProps.data.price) }}
+      <Column field="type" header="Type"></Column>
+      <Column field="quantity" header="Inventory"></Column>
+
+      <Column header="Actions">
+        <template #body>
+          <button class="btn-icon btn-icon-success">
+            <i class="pi pi-pencil"></i>
+          </button>
+          <button class="btn-icon btn-icon-danger" @click="deleteProduct">
+            <i class="pi pi-ban"></i>
+          </button>
         </template>
       </Column>
-      <Column field="rating" header="Reviews">
-        <template #body="slotProps">
-          <Rating
-            :modelValue="slotProps.data.rating"
-            :readonly="true"
-            :cancel="false" />
-        </template>
-      </Column>
-      <Column header="Status">
-        <template #body="slotProps">
-          <span
-            :class="
-              'product-badge status-' +
-              slotProps.data.inventoryStatus.toLowerCase()
-            "
-            >{{ slotProps.data.inventoryStatus }}</span
-          >
-        </template>
-      </Column> -->
       <template #footer>
         In total there are {{ products ? products.length : 0 }} products.
       </template>
@@ -66,18 +56,14 @@ h1 {
 </style>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
-
 const logout = (event, index) => {
   localStorage.removeItem('token');
   router.push('/Login');
-
 };
-
 const products = ref([]);
-
 onMounted(async () => {
   getProducts();
 });
@@ -85,23 +71,30 @@ onMounted(async () => {
 const newProduct = () => {
   router.push('/Admin/New');
 };
-
 const login = () => {
   router.push('/Login');
 };
-
 const getProducts = async () => {
   const response = await axios.get('/api/products');
   products.value = response.data;
 };
+const getPhoto = () => {
+  let photo = '/upload/image.png';
+  if (form.value.photo) {
+    if (form.value.photo.indexOf('base64') != -1) {
+      photo = form.value.photo;
+    } else {
+      photo = `/upload/${form.value.photo}`;
+    }
+  }
+  return photo;
+};
 const ourImage = img => {
   return `/upload/${img}`;
 };
-
 const onEdit = id => {
   router.push(`/Admin/Edit/${id}`);
 };
-
 const deleteProduct = id => {
   Swal.fire({
     title: 'Are you sure?',
@@ -121,17 +114,17 @@ const deleteProduct = id => {
           getProducts();
         })
         .catch(() => {
-          Swal.fire('Failed!', 'There was something wrong.', 'Warning');
+          Swal.fire('Failed!', 'There was something wrong.', 'warning');
         });
     }
   });
 };
 </script>
+
 <script>
 export default {
   data() {
     return {
-      active: 3,
       items: [
         {
           label: 'Home',
@@ -151,8 +144,7 @@ export default {
         {
           label: 'Documentation',
           icon: 'pi pi-fw pi-file',
-          to: '/',
-          
+          to: '/documentation',
         },
         {
           label: 'Settings',
@@ -164,25 +156,4 @@ export default {
   },
 };
 </script>
-<!--
-<script>
 
-import ProductService from './service/ProductService';
-
-export default {
-    setup() {
-        onMounted(() => {
-            productService.value.getProductsSmall().then(data => products.value = data);
-        })
-
-        const products = ref();
-        const productService = ref(new ProductService());
-
-        const formatCurrency = (value) => {
-            return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-        };
-
-        return { products, formatCurrency }
-    }
-}
-</script>  -->

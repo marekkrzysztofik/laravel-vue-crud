@@ -1,13 +1,10 @@
 <template>
   <div class="container">
     <div class="card">
-      <TabMenu :model="items">
-
-      </TabMenu> 
+      <TabMenu :model="items"> </TabMenu>
       <router-view />
     </div>
     <h1>Welcome to homepage</h1>
-     
 
     <h1>Welcome to admin overview</h1>
     <div class="products__list table my-3 bg-grey">
@@ -94,7 +91,6 @@ const form = reactive({
   password: '',
 });
 
-
 const logout = () => {
   localStorage.removeItem('token');
   router.push('/');
@@ -131,25 +127,23 @@ const deleteProduct = id => {
     confirmButtonText: 'Yes, delete it!',
   }).then(result => {
     if (result.value) {
-      axios.delete(`/api/deleteProduct/${id}`)
+      axios
+        .delete(`/api/products/${id}`)
         .then(() => {
           Swal.fire('Delete', 'Product delete successfully', 'success');
           getProducts();
         })
         .catch(() => {
-          Swal.fire('Failed!', 'There was something wrong.', 'Warning');
+          Swal.fire('Failed!', 'There was something wrong.', 'warning');
         });
     }
   });
 };
-
-
 </script>
 <script>
 export default {
   data() {
     return {
-      active: 3,
       items: [
         {
           label: 'Home',
@@ -180,7 +174,5 @@ export default {
     };
   },
 };
-
-
-
 </script>
+
