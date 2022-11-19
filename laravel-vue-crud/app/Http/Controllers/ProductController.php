@@ -1,5 +1,5 @@
 <?php
-
+  
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -8,9 +8,7 @@ use Image;
 class ProductController extends Controller {
     public function getProducts() {
         return Product::all();
-        return response() -> json([
-            'products' => $products
-        ], 200);
+         
     }  
 public function addProduct(Request $request) {
         $product = new Product();
@@ -42,7 +40,7 @@ public function editProduct($id) {
         'product' => $product
         ], 200);
 }
-
+ 
 public function updateProduct(Request $request, $id) {
         $product = Product::find($id);
         $product->name = $request->name;
@@ -75,10 +73,11 @@ public function deleteProduct(Request $request, $id) {
     $product = Product::findOrFail($id);
     $image_path = public_path()."/upload/";
     $image = $image_path. $product->photo;
-        if(file_exists($image)) {
+       if(file_exists($image)) {
             @unlink($image);
     }
     $product->delete();
 }
 
 }
+

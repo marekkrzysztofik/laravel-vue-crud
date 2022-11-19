@@ -111,7 +111,7 @@ const login = () => {
 };
 
 const getProducts = async () => {
-  const response = await axios.get('/api/getProducts');
+  const response = await axios.get('/api/products');
   products.value = response.data;
 };
 const ourImage = img => {
@@ -135,7 +135,7 @@ const deleteProduct = id => {
   }).then(result => {
     if (result.value) {
       axios
-        .get(`/api/deleteProduct/${id}`)
+        .delete(`/api/products/${id}`)
         .then(() => {
           Swal.fire('Delete', 'Product delete successfully', 'success');
           getProducts();
