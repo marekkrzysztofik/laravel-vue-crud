@@ -42,7 +42,6 @@ class ProdController extends Controller
 
         if ($request->photo) {
             $name = time() . ".png";
-            $img = $request->photo;
              $img = Image::make($request->photo)->resize(200, 200);
             $upload_path = public_path() . "/upload/";
             $img->save($upload_path . $name);
@@ -53,7 +52,6 @@ class ProdController extends Controller
         $product->type = $request->type;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
-
         $product->save();
     }
 

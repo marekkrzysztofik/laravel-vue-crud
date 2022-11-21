@@ -42,7 +42,7 @@
           <InputText
             type="text"
             v-model="form.price" /> </p>
-            
+            <FileUpload  @upload="uploadPhoto" />
         <Button label="Save" @click="saveProduct()" class="p-button-rounded right"  />
             </template>
         </Card>
@@ -95,8 +95,8 @@ const getPhoto = () => {
   }
   return photo;
 };
-const updatePhoto = e => {
-  const file = e.target.files[0];
+const uploadPhoto = e => {
+  const file = e.files[0];
   const reader = new FileReader();
 
   reader.onloadend = file => {

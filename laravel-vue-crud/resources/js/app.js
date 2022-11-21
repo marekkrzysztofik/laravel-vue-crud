@@ -38,10 +38,12 @@ import Row from 'primevue/row';                     //optional for row
 import Card from 'primevue/card';
 import Textarea from 'primevue/textarea';
 import Toolbar from 'primevue/toolbar';
+import FileUpload from 'primevue/fileupload';
 const app = createApp(App);
 
 app.use(router);
 app.use(PrimeVue);
+app.component('FileUpload', FileUpload);
 app.component('DataTable', DataTable);
 app.component('Card', Card);
 app.component('Column', Column);

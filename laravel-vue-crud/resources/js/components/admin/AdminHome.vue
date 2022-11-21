@@ -20,10 +20,10 @@
       </Toolbar>
 
       <template #header>Products </template>
-      <Column  field="id"  header="ID"></Column>
-      <Column  field=""  header="Image">
-        <template #body> 
-          <img class="products__list__item--img"  />
+      <Column  field="id"  header="ID" ></Column>
+      <Column  field="photo"  header="Image">
+        <template #body="slotProps" > 
+          <img class="products__list__item--img" :src="ourImage(slotProps.data.photo)" />
         </template>
       </Column>
       <Column field="name" header="Name"></Column>
@@ -66,6 +66,7 @@ const logout = (event, index) => {
 const products = ref([]);
 onMounted(async () => {
   getProducts();
+  
 });
 
 const newProduct = () => {
@@ -90,6 +91,7 @@ const getPhoto = () => {
   return photo;
 };
 const ourImage = img => {
+  console.log(img);
   return `/upload/${img}`;
 };
 const onEdit = id => {
@@ -124,6 +126,7 @@ const deleteProduct = id => {
 <script>
 export default {
   data() {
+    
     return {
       items: [
         {
