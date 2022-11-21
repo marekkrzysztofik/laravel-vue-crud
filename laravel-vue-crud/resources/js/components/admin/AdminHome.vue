@@ -31,11 +31,12 @@
       <Column field="quantity" header="Inventory"></Column>
 
       <Column header="Actions">
-        <template #body>
-          <button class="btn-icon btn-icon-success">
+        <template #body="slotProps">
+          <button class="btn-icon btn-icon-success"
+          @click="onEdit(slotProps.data.id)">
             <i class="pi pi-pencil"></i>
           </button>
-          <button class="btn-icon btn-icon-danger" @click="deleteProduct">
+          <button class="btn-icon btn-icon-danger" @click="deleteProduct(slotProps.data.id)">
             <i class="pi pi-ban"></i>
           </button>
         </template>

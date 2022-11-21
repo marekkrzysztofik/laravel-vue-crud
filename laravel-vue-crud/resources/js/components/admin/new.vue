@@ -42,7 +42,8 @@
           <InputText
             type="text"
             v-model="form.price" /> </p>
-            <FileUpload  @upload="uploadPhoto" />
+            <FileUpload mode="basic" :customUpload="true" :multiple="true" @uploader="uploadPhoto" />
+            <p></p>
         <Button label="Save" @click="saveProduct()" class="p-button-rounded right"  />
             </template>
         </Card>
