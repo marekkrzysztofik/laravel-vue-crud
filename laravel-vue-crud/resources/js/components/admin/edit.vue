@@ -4,51 +4,67 @@
       <TabMenu :model="items"> </TabMenu>
       <router-view />
     </div>
+    <Toolbar>
+        <template #start>
+          
+          <Button icon="pi pi-refresh" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          <Button label="Log out" @click="logout" class="p-button-rounded" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          
+        </template>
+      </Toolbar>
     <div class="cards">
       
-      <Card style="width: 25rem; margin-top: 2em">
-              <template #title>
-                  <h1>Add product</h1>
-              </template>
-              <template #content>
+    <Card style="width: 32rem; margin-top: 1em">
+      <h1>Add product</h1>
+            <template #title>
                 
-                  <h3>Name</h3>
-            <InputText
-              type="text"
-              v-model="form.name" />
-          
-          <p></p><h4>Description</h4>
-          <Textarea v-model="form.description" rows="7" cols="40" /> 
-              </template>
-          </Card>
-          <Card class="card-2" style="width: 25rem; margin-top: 2em">
-              
-              <template #content>
-                <p>
-                  <h3>Type</h3>
-            <InputText>
-              type="text"
-              v-model="form.type" </InputText> </p>
-            
-              <p>
-                  <h3>Inventory</h3>
-            <InputText
-              type="text"
-              v-model="form.quantity" /> </p>
-              <p>
-                  <h3>Price</h3>
-            <InputText
-              type="text"
-              v-model="form.price" /> </p>
-              <FileUpload mode="basic" :customUpload="true" :multiple="true" @uploader="uploadPhoto" />
-              <p></p>
-              <Button label="Save" @click="updateProduct()" class="p-button-rounded right"  />
             </template>
-          </Card>
-          
-          
+            <template #content>
+              
+                <h3>Name</h3>
+          <InputText
+          class="width"
+            type="text"
+            v-model="form.name" />
         
-        </div>
+        <p></p><h3>Description</h3>
+        <Textarea v-model="form.description" rows="7" cols="55" /> 
+        <FileUpload style="margin-top:5%;" :auto="true" :fileLimit="1" mode="basic"  @upload="uploadPhoto" />
+            </template>
+        </Card>
+      
+      
+        <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
+            
+            <template #content>
+              <p>
+                <h3>Type</h3>
+          <InputText
+          class="width"
+            type="text"
+            v-model="form.type" /> 
+          </p>
+            <p>
+                <h3>Inventory</h3>
+          <InputText
+          class="width"
+            type="text"
+            v-model="form.quantity" /> </p>
+            <p>
+                <h3>Price</h3>
+          <InputText
+          class="width"
+            type="text"
+            v-model="form.price" /> </p>
+          
+            <p></p>
+        <Button style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save" @click="saveProduct()" class="p-button-rounded right"/>
+            </template>
+        </Card>
+        
+      </div>
     
   </div>
 </template>

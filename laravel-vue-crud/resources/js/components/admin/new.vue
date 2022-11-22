@@ -4,47 +4,65 @@
       <TabMenu :model="items"> </TabMenu>
       <router-view />
     </div>
+    
+    <Toolbar>
+        <template #start>
+          
+          <Button icon="pi pi-refresh" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          <Button label="Log out" @click="logout" class="p-button-rounded" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          
+        </template>
+      </Toolbar>
+     
     <div class="cards">
       
-    <Card style="width: 25rem; margin-top: 2em">
+    <Card style="width: 32rem; margin-top: 1em">
+      <h1>Add product</h1>
             <template #title>
-                <h1>Add product</h1>
+                
             </template>
             <template #content>
               
                 <h3>Name</h3>
           <InputText
+          class="width"
             type="text"
             v-model="form.name" />
         
-        <p></p><h4>Description</h4>
-        <Textarea v-model="form.description" rows="7" cols="40" /> 
+        <p></p><h3>Description</h3>
+        <Textarea v-model="form.description" rows="7" cols="55" /> 
+        <FileUpload style="margin-top:5%;" :auto="true" :fileLimit="1" mode="basic"  @upload="uploadPhoto" />
             </template>
         </Card>
       
       
-        <Card class="card-2" style="width: 25rem; margin-top: 2em">
+        <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
             
             <template #content>
               <p>
                 <h3>Type</h3>
           <InputText
+          class="width"
             type="text"
             v-model="form.type" /> 
           </p>
             <p>
                 <h3>Inventory</h3>
           <InputText
+          class="width"
             type="text"
             v-model="form.quantity" /> </p>
             <p>
                 <h3>Price</h3>
           <InputText
+          class="width"
             type="text"
             v-model="form.price" /> </p>
-            <FileUpload mode="basic" :customUpload="true" :multiple="true" @uploader="uploadPhoto" />
+          
             <p></p>
-        <Button label="Save" @click="saveProduct()" class="p-button-rounded right"  />
+        <Button style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save" @click="saveProduct()" class="p-button-rounded right"/>
             </template>
         </Card>
         
@@ -53,27 +71,22 @@
   </div>
 </template>
 <style>
+.width {
+  width: 80%;
+}
 .cards{
   display: inline-flex;
-  margin-left: 5%;
-  text-align: center;
 }
 
 .card-2 {
-  margin-left: 5%;
-  padding-top: 4%;
+  margin-left: 2%;
 }
 
 </style>
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-/*const initialForm = { name:'',
-                        description:'',
-                            photo:'', 
-                            type:'', 
-                        quantity:'', 
-                        price:'' }*/
+
 const form = ref({
   name: '',
   description: '',
@@ -82,9 +95,12 @@ const form = ref({
   quantity: '',
   price: '',
 });
- 
-const router = useRouter();
 
+const router = useRouter();
+const logout = (event, index) => {
+  localStorage.removeItem('token');
+  router.push('/Login');
+};
 const getPhoto = () => {
   let photo = '/upload/image.png';
   if (form.value.photo) {
@@ -97,13 +113,19 @@ const getPhoto = () => {
   return photo;
 };
 const uploadPhoto = e => {
-  const file = e.files[0];
+  const file = e.target.files[0];
   const reader = new FileReader();
-
+  
   reader.onloadend = file => {
-    form.value.photo = reader.result;
+    form.value.photo= reader.result;
   };
   reader.readAsDataURL(file);
+  
+  fd.append('photo', form.value.photo)
+
+axios.post('/api/products', formData)
+  
+
 };
 
 const saveProduct = () => {
@@ -116,8 +138,7 @@ const saveProduct = () => {
   formData.append('quantity', form.value.quantity);
   formData.append('price', form.value.price);
 
-  axios
-    .post('/api/products', formData)
+  axios.post('/api/products', formData)
     .then(response => {
       (form.value.name = ''),
         (form.value.description = ''),

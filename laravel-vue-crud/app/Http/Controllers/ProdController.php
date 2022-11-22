@@ -42,7 +42,7 @@ class ProdController extends Controller
 
         if ($request->photo) {
             $name = time() . ".png";
-             $img = Image::make($request->photo)->resize(200, 200);
+             $img = $request->photo;  // Image::make($request->photo)->resize(200, 200);
             $upload_path = public_path() . "/upload/";
             $img->save($upload_path . $name);
             $product->photo = $name;

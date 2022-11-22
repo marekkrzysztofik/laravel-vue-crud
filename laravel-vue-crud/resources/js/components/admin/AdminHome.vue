@@ -28,7 +28,7 @@
       </Column>
       <Column field="name" header="Name"></Column>
       <Column field="type" header="Type"></Column>
-      <Column field="quantity" header="Inventory"></Column>
+      <Column field="quantity" header="Inventory"></Column> 
 
       <Column header="Actions">
         <template #body="slotProps">
