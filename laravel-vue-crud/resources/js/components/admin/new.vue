@@ -16,14 +16,14 @@
         </template>
       </Toolbar>
      
-    <div class="cards">
+    <div class="cards" >
       
     <Card style="width: 32rem; margin-top: 1em">
       <h1>Add product</h1>
             <template #title>
                 
             </template>
-            <template #content>
+            <template #content="slotProps">
               
                 <h3>Name</h3>
           <InputText
@@ -33,11 +33,12 @@
         
         <p></p><h3>Description</h3>
         <Textarea v-model="form.description" rows="7" cols="55" /> 
-        <FileUpload style="margin-top:5%;" :auto="true" :fileLimit="1" mode="basic"  @upload="uploadPhoto" />
+        <!-- :auto="true" -->
+        <FileUpload style="margin-top:5%;" :auto="true" :fileLimit="1" mode="basic" :customUpload="true" @uploader="uploadPhoto" />
+            
+         <!-- <img class="products__create__main--media--images--item--img" :src="getPhoto" />   -->
             </template>
         </Card>
-      
-      
         <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
             
             <template #content>
@@ -62,7 +63,8 @@
             v-model="form.price" /> </p>
           
             <p></p>
-        <Button style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save" @click="saveProduct()" class="p-button-rounded right"/>
+        <Button style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save" @click="saveProduct" class="p-button-rounded right"/>
+        
             </template>
         </Card>
         
@@ -101,6 +103,16 @@ const logout = (event, index) => {
   localStorage.removeItem('token');
   router.push('/Login');
 };
+const uploadPhoto = e => {
+  const file = e.files[0];
+  const reader = new FileReader();
+  reader.onloadend = file => {
+    form.value.photo= reader.result;
+  };
+  reader.readAsDataURL(file);
+  console.log(file);
+  console.log(reader.result);
+};
 const getPhoto = () => {
   let photo = '/upload/image.png';
   if (form.value.photo) {
@@ -112,22 +124,7 @@ const getPhoto = () => {
   }
   return photo;
 };
-const uploadPhoto = e => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  
-  reader.onloadend = file => {
-    form.value.photo= reader.result;
-  };
-  reader.readAsDataURL(file);
-  
-  fd.append('photo', form.value.photo)
-
-axios.post('/api/products', formData)
-  
-
-};
-
+ 
 const saveProduct = () => {
   const formData = new FormData();
 
@@ -161,6 +158,9 @@ const saveProduct = () => {
       );
     });
 };
+
+
+
 </script>
 <script>
 export default {

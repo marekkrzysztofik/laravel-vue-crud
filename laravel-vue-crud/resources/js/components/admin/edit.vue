@@ -6,7 +6,7 @@
     </div>
     <Toolbar>
         <template #start>
-          
+           
           <Button icon="pi pi-refresh" />
           <i class="pi pi-bars p-toolbar-separator mr-2" />
           <Button label="Log out" @click="logout" class="p-button-rounded" />
@@ -21,8 +21,7 @@
             <template #title>
                 
             </template>
-            <template #content>
-              
+            <template #content="slotProps">
                 <h3>Name</h3>
           <InputText
           class="width"
@@ -38,7 +37,7 @@
       
         <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
             
-            <template #content>
+            <template #content="slotProps">
               <p>
                 <h3>Type</h3>
           <InputText
@@ -60,7 +59,7 @@
             v-model="form.price" /> </p>
           
             <p></p>
-        <Button style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save" @click="saveProduct()" class="p-button-rounded right"/>
+        <Button class="p-button-rounded right" style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save" @click="updateProduct" />
             </template>
         </Card>
         
@@ -82,7 +81,10 @@ const form = ref({
   quantity: '',
   price: '',
 });
-
+const logout = (event, index) => {
+  localStorage.removeItem('token');
+  router.push('/Login');
+};
 onMounted(async () => {
   getSingleProduct();
 });
@@ -107,7 +109,7 @@ const getPhoto = () => {
   return photo;
 };
 
-const updatePhoto = e => {
+const uploadPhoto = e => {
   const file = e.target.files[0];
   const reader = new FileReader();
   
@@ -124,15 +126,18 @@ const getSingleProduct = async () => {
 
 const updateProduct = () => {
   const formData = new FormData();
+  
+  
   formData.append('name', form.value.name);
   formData.append('description', form.value.description);
   formData.append('photo', form.value.photo);
   formData.append('type', form.value.type);
   formData.append('quantity', form.value.quantity);
   formData.append('price', form.value.price);
+  console.log(form.value.name);
 
-  axios
-    .patch(`/api/products/${form.value.id}`, formData)
+  
+  axios.patch(`/api/products/${form.value.id}`, {...form.value})
     .then(response => {
       (form.value.name = ''),
         (form.value.description = ''),
