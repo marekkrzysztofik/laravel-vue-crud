@@ -11,6 +11,11 @@
         
     </head>
     <body>
+        <div class="card">
+            <p>fdsafdsfs</p>
+            <router-view />
+          </div>
+          {{-- tutaj header jak nie dasz rady w komponencie domowym --}}
         <div id="app">
             <router-view></router-view>
         </div>

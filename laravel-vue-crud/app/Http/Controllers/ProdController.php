@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class ProdController extends Controller
 {
@@ -35,14 +35,14 @@ class ProdController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {  
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
 
         if ($request->photo) {
-            $name = time() . ".png";
-             $img = $request->photo;  // Image::make($request->photo)->resize(200, 200);
+            $name = time() . ".png";  
+            $img = Image::make($request->photo)->resize(200, 200);
             $upload_path = public_path() . "/upload/";
             $img->save($upload_path . $name);
             $product->photo = $name;
@@ -88,7 +88,7 @@ class ProdController extends Controller
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
-
+        $this->handlePhoto();
         if ($request->photo && $product->photo != $request->photo) {
 
             $name = time() . ".png";
@@ -116,6 +116,17 @@ class ProdController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $image_path = public_path() . "/upload/";
+        $image = $image_path . $product->photo;
+        if (file_exists($image)) {
+            @unlink($image);
+        }
+        $product->delete();
+    }
+
+    public function handlePhoto($id)
     {
         $product = Product::findOrFail($id);
         $image_path = public_path() . "/upload/";
