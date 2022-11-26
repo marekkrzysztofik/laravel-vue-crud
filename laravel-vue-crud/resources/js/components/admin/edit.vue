@@ -30,7 +30,8 @@
         
         <p></p><h3>Description</h3>
         <Textarea v-model="form.description" rows="7" cols="55" /> 
-        <FileUpload style="margin-top:5%;" :auto="true" :fileLimit="1" mode="basic"  @upload="uploadPhoto" />
+        <FileUpload mode="basic" accept="image/*" @select="uploadPhoto" />
+        <img class="products__create__main--media--images--item--img" :src="getPhoto()" />
             </template>
         </Card>
       
@@ -71,6 +72,34 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+
+const items = [
+  {
+    label: 'Home',
+    icon: 'pi pi-home',
+    to: '/Admin',
+  },
+  {
+    label: 'Login',
+    icon: 'pi pi-user',
+    to: '/Login',
+  },
+  {
+    label: 'Register',
+    icon: 'pi pi-user-plus',
+    to: '/Register',
+  },
+  {
+    label: 'Documentation',
+    icon: 'pi pi-fw pi-file',
+    to: '/documentation',
+  },
+  {
+    label: 'Settings',
+    icon: 'pi pi-fw pi-cog',
+    to: '/settings',
+  },
+]
 
 const form = ref({
   id: '',
@@ -134,9 +163,9 @@ const updateProduct = () => {
   formData.append('type', form.value.type);
   formData.append('quantity', form.value.quantity);
   formData.append('price', form.value.price);
-  console.log(form.value.name);
+  console.log(form.value.photo);
 
-  
+  //{...form.value}
   axios.patch(`/api/products/${form.value.id}`, {...form.value})
     .then(response => {
       (form.value.name = ''),
@@ -161,38 +190,17 @@ const updateProduct = () => {
     });
 };
 </script>
-<script>
-export default {
-  data() {
-    return {
-      items: [
-        {
-          label: 'Home',
-          icon: 'pi pi-home',
-          to: '/',
-        },
-        {
-          label: 'Login',
-          icon: 'pi pi-user',
-          to: '/Login',
-        },
-        {
-          label: 'Register',
-          icon: 'pi pi-user-plus',
-          to: '/Register',
-        },
-        {
-          label: 'Documentation',
-          icon: 'pi pi-fw pi-file',
-          to: '/documentation',
-        },
-        {
-          label: 'Settings',
-          icon: 'pi pi-fw pi-cog',
-          to: '/settings',
-        },
-      ],
-    };
-  },
-};
-</script>
+
+<style scoped>
+.width {
+  width: 80%;
+}
+
+.cards {
+  display: inline-flex;
+}
+
+.card-2 {
+  margin-left: 2%;
+}
+</style>

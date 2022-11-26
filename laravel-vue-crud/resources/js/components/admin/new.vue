@@ -88,7 +88,7 @@ const items = [
   {
     label: 'Home',
     icon: 'pi pi-home',
-    to: '/',
+    to: '/Admin',
   },
   {
     label: 'Login',
@@ -147,8 +147,8 @@ const getPhoto = () => {
   }
   return photo;
 };
-
-const saveProduct = (isUpdated) => {
+//const saveProduct = (isUpdated)
+const saveProduct = () => {
   const formData = new FormData();
 
   formData.append('name', form.value.name);
@@ -185,41 +185,7 @@ const saveProduct = (isUpdated) => {
 
 
 </script>
-<script>
-// export default {
-//   data() {
-//     return {
-//       items: [
-//         {
-//           label: 'Home',
-//           icon: 'pi pi-home',
-//           to: '/',
-//         },
-//         {
-//           label: 'Login',
-//           icon: 'pi pi-user',
-//           to: '/Login',
-//         },
-//         {
-//           label: 'Register',
-//           icon: 'pi pi-user-plus',
-//           to: '/Register',
-//         },
-//         {
-//           label: 'Documentation',
-//           icon: 'pi pi-fw pi-file',
-//           to: '/documentation',
-//         },
-//         {
-//           label: 'Settings',
-//           icon: 'pi pi-fw pi-cog',
-//           to: '/settings',
-//         },
-//       ],
-//     };
-//   },
-// };
-</script>
+
 <style scoped>
 .width {
   width: 80%;

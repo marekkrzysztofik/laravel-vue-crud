@@ -39,16 +39,7 @@ class ProdController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
-
-        if ($request->photo) {
-            $name = time() . ".png";  
-            $img = Image::make($request->photo)->resize(200, 200);
-            $upload_path = public_path() . "/upload/";
-            $img->save($upload_path . $name);
-            $product->photo = $name;
-        } else {
-            $product->photo = "image.png";
-        }
+        $this->handlePhoto($request, $product);
         $product->type = $request->type;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
@@ -88,7 +79,7 @@ class ProdController extends Controller
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
-        $this->handlePhoto();
+        //$this->handlePhoto($request, $product);
         if ($request->photo && $product->photo != $request->photo) {
 
             $name = time() . ".png";
@@ -107,7 +98,7 @@ class ProdController extends Controller
         $product->quantity = $request->quantity;
         $product->price = $request->price;
         $product->save();
-    }
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -126,14 +117,32 @@ class ProdController extends Controller
         $product->delete();
     }
 
-    public function handlePhoto($id)
+    public function handlePhoto(Request $request, $product)
     {
-        $product = Product::findOrFail($id);
-        $image_path = public_path() . "/upload/";
-        $image = $image_path . $product->photo;
-        if (file_exists($image)) {
-            @unlink($image);
+
+        if ($request->photo) {
+            $name = time() . ".png";  
+            $img = Image::make($request->photo)->resize(200, 200);
+            $upload_path = public_path() . "/upload/";
+            $img->save($upload_path . $name);
+            $product->photo = $name;
+        } else {
+            $product->photo = "image.png";
         }
-        $product->delete();
+
+        // if ($request->photo && $product->photo != $request->photo) {
+
+        //     $name = time() . ".png";
+        //     $img = Image::make($request->photo)->resize(200, 200);
+        //     $upload_path = public_path() . "/upload/";
+        //     $image = $upload_path . $product->photo;
+        //     $img->save($upload_path . $name);
+        //     if (file_exists($image)) {
+        //         @unlink($image);
+        //     }
+        // } else {
+        //     $name = $product->photo;
+        // }
+    
     }
 }
