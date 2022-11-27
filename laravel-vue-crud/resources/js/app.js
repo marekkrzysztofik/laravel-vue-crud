@@ -1,17 +1,17 @@
 import './bootstrap';
 
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-import 'sweetalert2/dist/sweetalert2.css';
+//import Swal from 'sweetalert2/dist/sweetalert2.js';
+//import 'sweetalert2/dist/sweetalert2.css';
 
-window.Swal = Swal;
-const toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timeProgressBar: true,
-});
-window.toast = toast;
+// window.Swal = Swal;
+// const toast = Swal.mixin({
+//   toast: true,
+//   position: 'top-end',
+//   showConfirmButton: false,
+//   timer: 3000,
+//   timeProgressBar: true,
+// });
+// window.toast = toast;
 
 import { createApp } from 'vue';
 
@@ -39,10 +39,14 @@ import Card from 'primevue/card';
 import Textarea from 'primevue/textarea';
 import Toolbar from 'primevue/toolbar';
 import FileUpload from 'primevue/fileupload';
+import ToastService from 'primevue/toastservice';
+
+
 const app = createApp(App);
 
 app.use(router);
 app.use(PrimeVue);
+app.use(ToastService);
 app.component('FileUpload', FileUpload);
 app.component('DataTable', DataTable);
 app.component('Card', Card);

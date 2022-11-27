@@ -1,11 +1,14 @@
 <template>
   <div class="container">
+    <Toast />
     <div class="card">
       <TabMenu :model="items"> </TabMenu>
       <router-view />
     </div>
     <h1>Welcome to homepage</h1>
-
+    
+    <Button @click="showSuccess" label="Success" class="p-button-success"></Button>
+    
     <h1>Log in or Register to continue</h1>
    </div>
 </template>
@@ -18,11 +21,19 @@ h1{
 }
 </style>
 
-<script>
-export default {
-  data() {
-    return {
-      items: [
+<script setup>
+import { useToast } from 'primevue/usetoast';
+
+
+const toast = useToast();
+  const showSuccess = () => {
+            toast.add({ severity:'info', summary: 'Success', life: 3000 });
+        };
+
+        
+
+
+const items= [
         {
           label: 'Home',
           icon: 'pi pi-home',
@@ -48,9 +59,6 @@ export default {
           icon: 'pi pi-fw pi-cog',
           to: '/settings',
         },
-      ],
-    };
-  },
-};
+      ]
 </script>
 

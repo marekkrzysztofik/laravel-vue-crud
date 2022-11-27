@@ -119,7 +119,7 @@ const form = ref({
   quantity: '',
   price: '',
 });
-
+ 
 const router = useRouter();
 const logout = (event, index) => {
   localStorage.removeItem('token');
@@ -168,18 +168,18 @@ const saveProduct = () => {
       form.value.type = ''
       router.push('/Admin/');
 
-      toast.fire({
-        icon: 'success',
-        title: 'Product add successfully',
-      });
+      // toast.fire({
+      //   icon: 'success',
+      //   title: 'Product add successfully',
+      // });
     })
-    .catch(error => {
-      Swal.fire(
-        'Failed!',
-        'There was something wrong. Check if you filled name of the product.',
-        'warning'
-      );
-    });
+    // .catch(error => {
+    //   Swal.fire(
+    //     'Failed!',
+    //     'There was something wrong. Check if you filled name of the product.',
+    //     'warning'
+    //   );
+    // });
 };
 
 

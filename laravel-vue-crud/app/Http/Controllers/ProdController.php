@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Intervention\Image\Facades\Image;
 
+$name = time() . ".png";
+
 class ProdController extends Controller
 {
     /**
@@ -27,7 +29,7 @@ class ProdController extends Controller
     {
         //
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -36,10 +38,15 @@ class ProdController extends Controller
      */
     public function store(Request $request)
     {  
+        
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
-        $this->handlePhoto($request, $product);
+        if ($request->photo) {
+            $this->handlePhoto($request, $product);
+        } else {
+            $product->photo = "image.png";
+        }
         $product->type = $request->type;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
@@ -76,24 +83,16 @@ class ProdController extends Controller
      */
     public function update(Request $request, $id)
     {
+        global $name;
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
-        //$this->handlePhoto($request, $product);
         if ($request->photo && $product->photo != $request->photo) {
-
-            $name = time() . ".png";
-            $img = Image::make($request->photo)->resize(200, 200);
-            $upload_path = public_path() . "/upload/";
-            $image = $upload_path . $product->photo;
-            $img->save($upload_path . $name);
-            if (file_exists($image)) {
-                @unlink($image);
-            }
+            $this->handlePhoto($request, $product);
         } else {
-            $name = $product->photo;
+           $name = $product->photo; 
         }
-        $product->photo = $name;
+       // $product->photo = $name;
         $product->type = $request->type;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
@@ -119,30 +118,15 @@ class ProdController extends Controller
 
     public function handlePhoto(Request $request, $product)
     {
-
-        if ($request->photo) {
-            $name = time() . ".png";  
+            $name = time() . ".png";
             $img = Image::make($request->photo)->resize(200, 200);
             $upload_path = public_path() . "/upload/";
-            $img->save($upload_path . $name);
-            $product->photo = $name;
-        } else {
-            $product->photo = "image.png";
-        }
-
-        // if ($request->photo && $product->photo != $request->photo) {
-
-        //     $name = time() . ".png";
-        //     $img = Image::make($request->photo)->resize(200, 200);
-        //     $upload_path = public_path() . "/upload/";
-        //     $image = $upload_path . $product->photo;
-        //     $img->save($upload_path . $name);
-        //     if (file_exists($image)) {
-        //         @unlink($image);
-        //     }
-        // } else {
-        //     $name = $product->photo;
-        // }
-    
+            $image = $upload_path . $product->photo;
+            $img->save($upload_path . $name);  
+            $product->photo = $name; 
+            if (file_exists($image)) {
+                @unlink($image);
+            }
+            
     }
 }

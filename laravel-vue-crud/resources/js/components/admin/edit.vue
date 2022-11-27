@@ -1,71 +1,64 @@
-<template> 
+<template>
   <div class="container">
     <div class="card">
       <TabMenu :model="items"> </TabMenu>
       <router-view />
     </div>
     <Toolbar>
-        <template #start>
-           
-          <Button icon="pi pi-refresh" />
-          <i class="pi pi-bars p-toolbar-separator mr-2" />
-          <Button label="Log out" @click="logout" class="p-button-rounded" />
-          <i class="pi pi-bars p-toolbar-separator mr-2" />
-          
-        </template>
-      </Toolbar>
+      <template #start>
+
+        <Button icon="pi pi-refresh" />
+        <i class="pi pi-bars p-toolbar-separator mr-2" />
+        <Button label="Log out" @click="logout" class="p-button-rounded" />
+        <i class="pi pi-bars p-toolbar-separator mr-2" />
+
+      </template>
+    </Toolbar>
     <div class="cards">
-      
-    <Card style="width: 32rem; margin-top: 1em">
-      <h1>Add product</h1>
-            <template #title>
-                
-            </template>
-            <template #content="slotProps">
-                <h3>Name</h3>
-          <InputText
-          class="width"
-            type="text"
-            v-model="form.name" />
-        
-        <p></p><h3>Description</h3>
-        <Textarea v-model="form.description" rows="7" cols="55" /> 
-        <FileUpload mode="basic" accept="image/*" @select="uploadPhoto" />
-        <img class="products__create__main--media--images--item--img" :src="getPhoto()" />
-            </template>
-        </Card>
-      
-      
-        <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
-            
-            <template #content="slotProps">
-              <p>
-                <h3>Type</h3>
-          <InputText
-          class="width"
-            type="text"
-            v-model="form.type" /> 
+
+      <Card style="width: 32rem; margin-top: 1em">
+        <h1>Add product</h1>
+        <template #title>
+
+        </template>
+        <template #content="slotProps">
+          <h3>Name</h3>
+          <InputText class="width" type="text" v-model="form.name" />
+
+          <p></p>
+          <h3>Description</h3>
+          <Textarea v-model="form.description" rows="7" cols="55" />
+          <FileUpload mode="basic" accept="image/*" @select="uploadPhoto" />
+          <img class="products__create__main--media--images--item--img" :src="getPhoto()" />
+        </template>
+      </Card>
+
+
+      <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
+
+        <template #content="slotProps">
+          <p>
+          <h3>Type</h3>
+          <InputText class="width" type="text" v-model="form.type" />
           </p>
-            <p>
-                <h3>Inventory</h3>
-          <InputText
-          class="width"
-            type="text"
-            v-model="form.quantity" /> </p>
-            <p>
-                <h3>Price</h3>
-          <InputText
-          class="width"
-            type="text"
-            v-model="form.price" /> </p>
-          
-            <p></p>
-        <Button class="p-button-rounded right" style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save" @click="updateProduct" />
-            </template>
-        </Card>
-        
-      </div>
-    
+          <p>
+          <h3>Inventory</h3>
+          <InputText class="width" type="text" v-model="form.quantity" />
+          </p>
+          <p>
+          <h3>Price</h3>
+          <InputText class="width" type="text" v-model="form.price" />
+          </p>
+
+          <p></p>
+          <Button class="p-button-rounded right"
+            style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save"
+            @click="updateProduct" />
+        </template>
+      </Card>
+
+    </div>
+
   </div>
 </template>
 
@@ -139,13 +132,15 @@ const getPhoto = () => {
 };
 
 const uploadPhoto = e => {
-  const file = e.target.files[0];
+  console.log(e)
+  const file = e.files[0];
   const reader = new FileReader();
-  
   reader.onloadend = file => {
     form.value.photo = reader.result;
   };
   reader.readAsDataURL(file);
+  console.log(file);
+  console.log(reader.result);
 };
 
 const getSingleProduct = async () => {
@@ -155,8 +150,8 @@ const getSingleProduct = async () => {
 
 const updateProduct = () => {
   const formData = new FormData();
-  
-  
+
+
   formData.append('name', form.value.name);
   formData.append('description', form.value.description);
   formData.append('photo', form.value.photo);
@@ -166,7 +161,7 @@ const updateProduct = () => {
   console.log(form.value.photo);
 
   //{...form.value}
-  axios.patch(`/api/products/${form.value.id}`, {...form.value})
+  axios.patch(`/api/products/${form.value.id}`, { ...form.value })
     .then(response => {
       (form.value.name = ''),
         (form.value.description = ''),
@@ -176,18 +171,18 @@ const updateProduct = () => {
         (form.value.price = ''),
         router.push('/Admin/');
 
-      toast.fire({
-        icon: 'success',
-        title: 'Product edited successfully',
-      });
+      // toast.fire({
+      //   icon: 'success',
+      //   title: 'Product edited successfully',
+      // });
     })
-    .catch(error => {
-      Swal.fire(
-        'Failed!',
-        'There was something wrong. Check if you filled name of the product.',
-        'warning'
-      );
-    });
+  // .catch(error => {
+  //   Swal.fire(
+  //     'Failed!',
+  //     'There was something wrong. Check if you filled name of the product.',
+  //     'warning'
+  //   );
+  // });
 };
 </script>
 
