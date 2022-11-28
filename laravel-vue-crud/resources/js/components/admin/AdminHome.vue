@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <div class="card">
+    <!-- <div class="card">
       <TabMenu :model="items"> </TabMenu>
-      <router-view />
-    </div>
+      <router-view /> 
+    </div> -->
 
     <DataTable  :value="products"  responsiveLayout="scroll">
       <Toolbar>
@@ -124,7 +124,7 @@ const deleteProduct = id => {
 };
 </script>
 
-<script>
+<!-- <script>
 export default {
   data() {
     
@@ -159,5 +159,5 @@ export default {
     };
   },
 };
-</script>
+</script> -->
 

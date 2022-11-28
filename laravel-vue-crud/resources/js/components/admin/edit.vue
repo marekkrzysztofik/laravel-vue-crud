@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <div class="card">
-      <TabMenu :model="items"> </TabMenu>
-      <router-view />
-    </div>
     <Toolbar>
       <template #start>
 
@@ -11,7 +7,7 @@
         <i class="pi pi-bars p-toolbar-separator mr-2" />
         <Button label="Log out" @click="logout" class="p-button-rounded" />
         <i class="pi pi-bars p-toolbar-separator mr-2" />
-
+ 
       </template>
     </Toolbar>
     <div class="cards">

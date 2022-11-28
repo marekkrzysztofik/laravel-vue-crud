@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <div class="card">  
-            <TabMenu :model="items" />
-            <router-view/>
-        </div>
     <h1>Create your account</h1>
     <div class="login">
       <h2>Register</h2>
@@ -75,41 +71,5 @@ const register = async () => {
     .catch(e => {
       errors.value = e.response.data.message;
     });
-};
-</script>
-<script>
-export default {
-  data() {
-    return {
-      
-      items: [
-        {
-          label: 'Home',
-          icon: 'pi pi-home',
-          to: '/',
-        },
-        {
-          label: 'Login',
-          icon: 'pi pi-user',
-          to: '/Login',
-        },
-        {
-          label: 'Register',
-          icon: 'pi pi-user-plus',
-          to: '/Register',
-        },
-        {
-          label: 'Documentation',
-          icon: 'pi pi-fw pi-file',
-          to: '/documentation',
-        },
-        {
-          label: 'Settings',
-          icon: 'pi pi-fw pi-cog',
-          to: '/settings',
-        },
-      ],
-    };
-  },
 };
 </script>

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <div class="card">
+    <!-- <div class="card">
       <TabMenu :model="items" />
       <router-view />
-    </div>
+    </div> -->
     <h1>Log in to continue</h1>
     <div class="login">
       <h2>Log in</h2>

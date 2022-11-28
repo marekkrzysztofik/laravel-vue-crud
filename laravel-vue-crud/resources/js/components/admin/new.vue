@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <div class="card">
+    <!-- <div class="card">
       <TabMenu :model="items"> </TabMenu>
       <router-view />
-    </div>
+    </div> -->
 
     <Toolbar>
       <template #start>
@@ -24,9 +24,9 @@
 
         </template>
         <template #content="slotProps">
-          <InputText class="width" type="text" v-model="firstName" />
+          <!-- <InputText class="width" type="text" v-model="firstName" />
           <InputText class="width" type="text" v-model="lastName" />
-          <p>{{concatNames}}</p>
+          <p>{{concatNames}}</p> -->
 
           <h3>Name</h3>
           <InputText class="width" type="text" v-model="form.name" />
@@ -64,7 +64,7 @@
       </Card>
 
     </div>
-
+ 
   </div>
 </template>
 <script setup>
