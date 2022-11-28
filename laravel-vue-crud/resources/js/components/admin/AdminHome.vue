@@ -1,10 +1,6 @@
 <template>
   <div class="container">
-    <!-- <div class="card">
-      <TabMenu :model="items"> </TabMenu>
-      <router-view /> 
-    </div> -->
-
+    <Home></Home>
     <DataTable  :value="products"  responsiveLayout="scroll">
       <Toolbar>
         <template #start>
@@ -57,6 +53,7 @@ h1 {
 </style>
 
 <script setup>
+
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -124,40 +121,5 @@ const deleteProduct = id => {
 };
 </script>
 
-<!-- <script>
-export default {
-  data() {
-    
-    return {
-      items: [
-        {
-          label: 'Home',
-          icon: 'pi pi-home',
-          to: '/',
-        },
-        {
-          label: 'Login',
-          icon: 'pi pi-user',
-          to: '/Login',
-        },
-        {
-          label: 'Register',
-          icon: 'pi pi-user-plus',
-          to: '/Register',
-        },
-        {
-          label: 'Documentation',
-          icon: 'pi pi-fw pi-file',
-          to: '/documentation',
-        },
-        {
-          label: 'Settings',
-          icon: 'pi pi-fw pi-cog',
-          to: '/settings',
-        },
-      ],
-    };
-  },
-};
-</script> -->
+
 

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Home></Home>
     <Toolbar>
       <template #start>
 
@@ -61,34 +62,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-
-const items = [
-  {
-    label: 'Home',
-    icon: 'pi pi-home',
-    to: '/Admin',
-  },
-  {
-    label: 'Login',
-    icon: 'pi pi-user',
-    to: '/Login',
-  },
-  {
-    label: 'Register',
-    icon: 'pi pi-user-plus',
-    to: '/Register',
-  },
-  {
-    label: 'Documentation',
-    icon: 'pi pi-fw pi-file',
-    to: '/documentation',
-  },
-  {
-    label: 'Settings',
-    icon: 'pi pi-fw pi-cog',
-    to: '/settings',
-  },
-]
+//import New, {uploadPhoto} from '../Admin/New.vue'
 
 const form = ref({
   id: '',
@@ -127,17 +101,17 @@ const getPhoto = () => {
   return photo;
 };
 
-const uploadPhoto = e => {
-  console.log(e)
-  const file = e.files[0];
-  const reader = new FileReader();
-  reader.onloadend = file => {
-    form.value.photo = reader.result;
-  };
-  reader.readAsDataURL(file);
-  console.log(file);
-  console.log(reader.result);
-};
+// const uploadPhoto = e => {
+//   console.log(e)
+//   const file = e.files[0];
+//   const reader = new FileReader();
+//   reader.onloadend = file => {
+//     form.value.photo = reader.result;
+//   };
+//   reader.readAsDataURL(file);
+//   console.log(file);
+//   console.log(reader.result);
+// };
 
 const getSingleProduct = async () => {
   const response = await axios.get(`/api/products/${props.id}`);

@@ -12,7 +12,7 @@ import './bootstrap';
 //   timeProgressBar: true,
 // });
 // window.toast = toast;
-
+ 
 import { createApp } from 'vue';
 
 import router from './router';
@@ -40,10 +40,10 @@ import Textarea from 'primevue/textarea';
 import Toolbar from 'primevue/toolbar';
 import FileUpload from 'primevue/fileupload';
 import ToastService from 'primevue/toastservice';
-
+import Home from './components/Products/Home.vue';
 
 const app = createApp(App);
-
+ 
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
@@ -59,5 +59,6 @@ app.component('Button', Button);
 app.component('Dialog', Dialog);
 app.component('InputText', InputText);
 app.component('Textarea', Textarea);
+app.component('Home', Home);
 app.mount('#app');
 

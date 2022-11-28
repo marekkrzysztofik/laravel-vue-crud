@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Home></Home>
     <h1>Create your account</h1>
     <div class="login">
       <h2>Register</h2>

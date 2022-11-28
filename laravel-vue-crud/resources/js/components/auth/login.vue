@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Home></Home>
     <!-- <div class="card">
       <TabMenu :model="items" />
       <router-view />
