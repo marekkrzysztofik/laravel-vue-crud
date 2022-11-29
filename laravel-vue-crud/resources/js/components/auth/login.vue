@@ -1,24 +1,25 @@
 <template>
   <div class="container">
     <Home></Home>
-    <!-- <div class="card">
-      <TabMenu :model="items" />
-      <router-view />
-    </div> -->
     <h1>Log in to continue</h1>
     <div class="login">
       <h2>Log in</h2>
       <div class="loginp">
         <p>
-          <InputText class="inp" type="text" placeholder="Enter your email" v-model="form.email" />
-          <!-- :style="{ marginLeft: '2.5em' }" -->
+          <InputText
+            class="inp"
+            type="text"
+            placeholder="Enter your email"
+            v-model="form.email" />
         </p>
-
         <p>
-          <InputText class="inp" type="password" placeholder="Enter your password" v-model="form.password" />
+          <InputText
+            class="inp"
+            type="password"
+            placeholder="Enter your password"
+            v-model="form.password" />
         </p>
         <Button label="Log in" @click="login()" class="p-button-rounded" />
-
       </div>
     </div>
   </div>
@@ -43,7 +44,6 @@
   line-height: 120%;
   padding: 5%;
   overflow: hidden;
-
 }
 
 .inp:hover {
@@ -58,7 +58,6 @@
   background-color: azure;
   cursor: pointer;
   margin: 2em 0 0 5.5em;
-
 }
 
 .sub:hover {
@@ -100,39 +99,4 @@ const login = async () => {
   });
 };
 </script>
-<script>
-export default {
-  data() {
-    return {
 
-      items: [
-        {
-          label: 'Home',
-          icon: 'pi pi-home',
-          to: '/',
-        },
-        {
-          label: 'Login',
-          icon: 'pi pi-user',
-          to: '/Login',
-        },
-        {
-          label: 'Register',
-          icon: 'pi pi-user-plus',
-          to: '/Register',
-        },
-        {
-          label: 'Documentation',
-          icon: 'pi pi-fw pi-file',
-          to: '/documentation',
-        },
-        {
-          label: 'Settings',
-          icon: 'pi pi-fw pi-cog',
-          to: '/settings',
-        },
-      ],
-    };
-  },
-};
-</script>

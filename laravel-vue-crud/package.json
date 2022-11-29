@@ -24,6 +24,7 @@
         "@vue/compiler-sfc": "^3.2.41",
         "babel-loader": "^9.1.0",
         "bootstrap": "^5.2.2",
+        "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.19.0",
         "sweetalert2": "^11.4.8",

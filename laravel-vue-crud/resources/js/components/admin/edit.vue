@@ -12,7 +12,7 @@
       </template>
     </Toolbar>
     <div class="cards">
-
+ 
       <Card style="width: 32rem; margin-top: 1em">
         <h1>Add product</h1>
         <template #title>
@@ -101,17 +101,17 @@ const getPhoto = () => {
   return photo;
 };
 
-// const uploadPhoto = e => {
-//   console.log(e)
-//   const file = e.files[0];
-//   const reader = new FileReader();
-//   reader.onloadend = file => {
-//     form.value.photo = reader.result;
-//   };
-//   reader.readAsDataURL(file);
-//   console.log(file);
-//   console.log(reader.result);
-// };
+const uploadPhoto = e => {
+  console.log(e)
+  const file = e.files[0];
+  const reader = new FileReader();
+  reader.onloadend = file => {
+    form.value.photo = reader.result;
+  };
+  reader.readAsDataURL(file);
+  console.log(file);
+  console.log(reader.result);
+};
 
 const getSingleProduct = async () => {
   const response = await axios.get(`/api/products/${props.id}`);

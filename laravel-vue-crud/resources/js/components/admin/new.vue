@@ -11,7 +11,7 @@
 
       </template>
     </Toolbar>
-
+ 
     <div class="cards">
 
       <Card style="width: 32rem; margin-top: 1em">
@@ -25,10 +25,13 @@
           <p>{{concatNames}}</p> -->
 
           <h3>Name</h3>
+          <br>
           <InputText class="width" type="text" v-model="form.name" />
 
           <p></p>
+          <br>
           <h3>Description</h3>
+          <br>
           <Textarea v-model="form.description" rows="7" cols="55" />
           <!-- :auto="true" -->
           <FileUpload mode="basic" accept="image/*" @select="uploadPhoto" />
@@ -36,36 +39,42 @@
           <img class="products__create__main--media--images--item--img" :src="getPhoto()" />
         </template>
       </Card>
-      <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
+      <Card class="card-2" style="width: 23rem; margin-top: 1em">
 
         <template #content>
           <p>
           <h3>Type</h3>
+          <br>
           <InputText class="width" type="text" v-model="form.type" />
-          </p>
+          </p> <br>
           <p>
           <h3>Inventory</h3>
+          <br>
           <InputText class="width" type="text" v-model="form.quantity" />
           </p>
+          <br>
           <p>
           <h3>Price</h3>
+          <br>
           <InputText class="width" type="text" v-model="form.price" />
           </p>
 
           <p></p>
           <Button style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save"
-            @click="saveProduct" class="p-button-rounded right" />
+            @click="showSuccess" class="p-button-rounded right" />
 
         </template>
       </Card>
-
+      <Toast/>
     </div>
  
   </div>
 </template>
 <script setup>
-import { ref, computed, } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+//import upload from '../../mixin/upload.js';
+import { useToast } from 'primevue/usetoast';
 // wstęp do computed
 const firstName = ref("");
 const lastName = ref("");
@@ -117,19 +126,32 @@ const getPhoto = () => {
   }
   return photo;
 };
+const toast = useToast();
+
+const showSuccess = () => {
+  toast.add({
+    severity: 'success',
+    summary: 'Success !!!',
+    detail: 'Product added successfully',
+    life: 1000,
+  });
+  setTimeout(function (){
+    saveProduct()}, 1000);
+};
+const showError = () => {
+            toast.add({severity:'error', summary: 'Error', detail:'Saving product has failed!', life: 3000});
+        }
 //const saveProduct = (isUpdated)
 const saveProduct = () => {
   const formData = new FormData();
-
   formData.append('name', form.value.name);
   formData.append('description', form.value.description);
   formData.append('photo', form.value.photo);
   formData.append('type', form.value.type);
   formData.append('quantity', form.value.quantity);
   formData.append('price', form.value.price);
-
   axios.post('/api/products', formData)
-    .then(response => {
+    .then((response) => {
       form.value.name = ''
       form.value.description = ''
       form.value.photo = ''
@@ -137,24 +159,12 @@ const saveProduct = () => {
       form.value.price = ''
       form.value.type = ''
       router.push('/Admin/');
-
-      // toast.fire({
-      //   icon: 'success',
-      //   title: 'Product add successfully',
-      // });
     })
-    // .catch(error => {
-    //   Swal.fire(
-    //     'Failed!',
-    //     'There was something wrong. Check if you filled name of the product.',
-    //     'warning'
-    //   );
-    // });
+     .catch(error => {
+      showError();
+     });
 };
 </script>
-
-
-
 <style scoped>
 .width {
   width: 80%;
@@ -162,6 +172,7 @@ const saveProduct = () => {
 
 .cards {
   display: inline-flex;
+  margin-left:1%;
 }
 
 .card-2 {

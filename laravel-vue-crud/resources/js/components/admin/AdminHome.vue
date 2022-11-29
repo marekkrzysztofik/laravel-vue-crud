@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Home></Home>
-    <DataTable  :value="products"  responsiveLayout="scroll">
+    <DataTable :value="products" responsiveLayout="scroll">
       <Toolbar>
         <template #start>
           <Button icon="pi pi-refresh" />
@@ -12,27 +12,38 @@
             label="Add Product"
             @click="newProduct"
             class="p-button-rounded" />
+          <Toast />
+          <ConfirmDialog></ConfirmDialog>
+          <Button
+            label="Success"
+            class="p-button-success"
+            @click="showSuccess" />
         </template>
       </Toolbar>
 
       <template #header>Products </template>
-      <Column  field="id"  header="ID" ></Column>
-      <Column  field="photo"  header="Image">
-        <template #body="slotProps" > 
-          <img class="products__list__item--img" :src="ourImage(slotProps.data.photo)" />
+      <Column field="id" header="ID"></Column>
+      <Column field="photo" header="Image">
+        <template #body="slotProps">
+          <img
+            class="products__list__item--img"
+            :src="ourImage(slotProps.data.photo)" />
         </template>
       </Column>
       <Column field="name" header="Name"></Column>
       <Column field="type" header="Type"></Column>
-      <Column field="quantity" header="Inventory"></Column> 
+      <Column field="quantity" header="Inventory"></Column>
 
       <Column header="Actions">
-        <template #body="slotProps">
-          <button class="btn-icon btn-icon-success"
-          @click="onEdit(slotProps.data.id)">
+        <template #body="btn">
+          <button
+            class="btn-icon btn-icon-success"
+            @click="onEdit(btn.data.id)">
             <i class="pi pi-pencil"></i>
           </button>
-          <button class="btn-icon btn-icon-danger" @click="deleteProduct(slotProps.data.id)">
+          <button
+            class="btn-icon btn-icon-danger"
+            @click="confirm2(btn.data.id)">
             <i class="pi pi-ban"></i>
           </button>
         </template>
@@ -53,9 +64,49 @@ h1 {
 </style>
 
 <script setup>
-
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
+import { useConfirm } from 'primevue/useconfirm';
+import ConfirmDialog from 'primevue/confirmdialog';
+
+const confirm = useConfirm();
+const confirm2 = id => {
+  confirm.require({
+    message: 'Do you want to delete this record?',
+    header: 'Delete Confirmation',
+    icon: 'pi pi-info-circle',
+    acceptClass: 'p-button-danger',
+    accept: () => {
+      toast.add({
+        severity: 'info',
+        summary: 'Confirmed',
+        detail: 'Record deleted',
+        life: 3000,
+      });
+      deleteProduct(id);
+    },
+    reject: () => {
+      toast.add({
+        severity: 'error',
+        summary: 'Rejected',
+        detail: 'You have rejected',
+        life: 3000,
+      });
+    },
+  });
+};
+
+const toast = useToast();
+
+const showSuccess = () => {
+  toast.add({
+    severity: 'success',
+    summary: 'Success Message',
+    detail: 'Message Content',
+    life: 3000,
+  });
+};
 const router = useRouter();
 const logout = (event, index) => {
   localStorage.removeItem('token');
@@ -64,30 +115,16 @@ const logout = (event, index) => {
 const products = ref([]);
 onMounted(async () => {
   getProducts();
-  
 });
-
 const newProduct = () => {
   router.push('/Admin/New');
 };
-const login = () => {
-  router.push('/Login');
-};
+
 const getProducts = async () => {
   const response = await axios.get('/api/products');
   products.value = response.data;
 };
-const getPhoto = () => {
-  let photo = '/upload/image.png';
-  if (form.value.photo) {
-    if (form.value.photo.indexOf('base64') != -1) {
-      photo = form.value.photo;
-    } else {
-      photo = `/upload/${form.value.photo}`;
-    }
-  }
-  return photo;
-};
+
 const ourImage = img => {
   console.log(img);
   return `/upload/${img}`;
@@ -96,30 +133,15 @@ const onEdit = id => {
   router.push(`/Admin/Edit/${id}`);
 };
 const deleteProduct = id => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You can't go back",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: 'red',
-    cancelButtonText: 'No',
-    confirmButtonText: 'Yes, delete it!',
-  }).then(result => {
-    if (result.value) {
-      axios
-        .delete(`/api/products/${id}`)
-        .then(() => {
-          Swal.fire('Delete', 'Product delete successfully', 'success');
-          getProducts();
-        })
-        .catch(() => {
-          Swal.fire('Failed!', 'There was something wrong.', 'warning');
-        });
-    }
+  axios.delete(`/api/products/${id}`).then(() => {
+    getProducts();
   });
 };
 </script>
 
-
-
+<style scoped>
+.flex {
+  width: 100%;
+  height: 100%;
+}
+</style>
