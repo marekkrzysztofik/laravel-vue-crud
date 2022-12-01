@@ -20,9 +20,9 @@
 
         </template>
         <template #content="slotProps">
-          <!-- <InputText class="width" type="text" v-model="firstName" />
+          <InputText class="width" type="text" v-model="firstName" />
           <InputText class="width" type="text" v-model="lastName" />
-          <p>{{concatNames}}</p> -->
+          <p>{{concatNames}}</p>
 
           <h3>Name</h3>
           <br>
@@ -71,10 +71,15 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 //import upload from '../../mixin/upload.js';
 import { useToast } from 'primevue/usetoast';
+import {  usePhoto } from './composable.js'
+
+const { uploadPhoto, form } = usePhoto();
+
+
 // wstęp do computed
 const firstName = ref("");
 const lastName = ref("");
@@ -90,31 +95,12 @@ const concatNames = computed(() => {
 })
 
 
-const form = ref({
-  name: '',
-  description: '',
-  photo: '',
-  type: '',
-  quantity: '',
-  price: '',
-});
- 
 const router = useRouter();
 const logout = (event, index) => {
   localStorage.removeItem('token');
   router.push('/Login');
 };
- const uploadPhoto = e => {
-  // console.log(e)
-  const file = e.files[0];
-  const reader = new FileReader();
-  reader.onloadend = file => {
-    form.value.photo = reader.result;
-  };
-  reader.readAsDataURL(file);
-  // console.log(file);
-  // console.log(reader.result);
-};
+
 const getPhoto = () => {
   let photo = '/upload/image.png';
   if (form.value.photo) {
@@ -152,6 +138,7 @@ const saveProduct = () => {
   formData.append('price', form.value.price);
   axios.post('/api/products', formData)
     .then((response) => {
+     
       form.value.name = ''
       form.value.description = ''
       form.value.photo = ''
@@ -165,6 +152,7 @@ const saveProduct = () => {
      });
 };
 </script>
+
 <style scoped>
 .width {
   width: 80%;

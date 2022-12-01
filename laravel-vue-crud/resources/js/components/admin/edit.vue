@@ -30,7 +30,6 @@
         </template>
       </Card>
 
-
       <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
 
         <template #content="slotProps">
@@ -62,17 +61,10 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-//import New, {uploadPhoto} from '../Admin/New.vue'
+import {  usePhoto } from './composable.js'
 
-const form = ref({
-  id: '',
-  name: '',
-  description: '',
-  photo: '',
-  type: '',
-  quantity: '',
-  price: '',
-});
+const { uploadPhoto, form } = usePhoto();
+
 const logout = (event, index) => {
   localStorage.removeItem('token');
   router.push('/Login');
@@ -101,17 +93,6 @@ const getPhoto = () => {
   return photo;
 };
 
-const uploadPhoto = e => {
-  console.log(e)
-  const file = e.files[0];
-  const reader = new FileReader();
-  reader.onloadend = file => {
-    form.value.photo = reader.result;
-  };
-  reader.readAsDataURL(file);
-  console.log(file);
-  console.log(reader.result);
-};
 
 const getSingleProduct = async () => {
   const response = await axios.get(`/api/products/${props.id}`);
@@ -128,7 +109,7 @@ const updateProduct = () => {
   formData.append('type', form.value.type);
   formData.append('quantity', form.value.quantity);
   formData.append('price', form.value.price);
-  console.log(form.value.photo);
+  //console.log(form.value.photo);
 
   //{...form.value}
   axios.patch(`/api/products/${form.value.id}`, { ...form.value })

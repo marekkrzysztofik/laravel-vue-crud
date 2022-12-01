@@ -14,10 +14,6 @@
             class="p-button-rounded" />
           <Toast />
           <ConfirmDialog></ConfirmDialog>
-          <Button
-            label="Success"
-            class="p-button-success"
-            @click="showSuccess" />
         </template>
       </Toolbar>
 
@@ -64,7 +60,7 @@ h1 {
 </style>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import { useConfirm } from 'primevue/useconfirm';
