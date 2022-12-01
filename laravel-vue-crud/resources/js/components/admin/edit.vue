@@ -12,7 +12,7 @@
       </template>
     </Toolbar>
     <div class="cards">
-  
+   
       <Card style="width: 32rem; margin-top: 1em">
         <h1>Add product</h1>
         <template #title>
@@ -100,20 +100,8 @@ const getSingleProduct = async () => {
 };
 
 const updateProduct = () => {
-  const formData = new FormData();
-
-
-  formData.append('name', form.value.name);
-  formData.append('description', form.value.description);
-  formData.append('photo', form.value.photo);
-  formData.append('type', form.value.type);
-  formData.append('quantity', form.value.quantity);
-  formData.append('price', form.value.price);
-  //console.log(form.value.photo);
-
-  //{...form.value}
-  axios.post(`/api/updateProduct/${form.value.id}`, { ...form.value })
-    .then(response => {
+  axios.post('/api/createOrUpdateProduct', { ...form.value })
+    .then(() => {
       (form.value.name = ''),
         (form.value.description = ''),
         (form.value.photo = ''),

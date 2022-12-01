@@ -56,6 +56,16 @@ class ProductController extends Controller
         $product->save();
      }
 
+     public function createOrUpdateProduct(Request $request)                    
+     {
+        $data= $request->all();
+        if(array_key_exists("id", $data) && $data['id']) {
+           $this->updateProduct($request, $data["id"]); 
+        } else {
+            $this->addProduct($request);
+        }
+        
+     }
     /**
      * Remove the specified resource from storage.
      *

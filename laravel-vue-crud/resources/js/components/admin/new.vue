@@ -125,31 +125,27 @@ const showSuccess = () => {
     saveProduct()}, 1000);
 };
 const showError = () => {
-            toast.add({severity:'error', summary: 'Error', detail:'Saving product has failed!', life: 3000});
-        }
+    toast.add({severity:'error', summary: 'Error', detail:'Saving product has failed!', life: 3000});
+} 
+
+const testGun = async () => {
+  let a = 2
+  a = a * await saveProduct()
+  a =+ 2
+  console.log(a)
+}
 //const saveProduct = (isUpdated)
-const saveProduct = () => {
-  const formData = new FormData();
-  formData.append('name', form.value.name);
-  formData.append('description', form.value.description);
-  formData.append('photo', form.value.photo);
-  formData.append('type', form.value.type);
-  formData.append('quantity', form.value.quantity);
-  formData.append('price', form.value.price);
-  axios.post('/api/addProduct', formData)
-    .then((response) => {
-     
-      form.value.name = ''
-      form.value.description = ''
-      form.value.photo = ''
-      form.value.quantity = ''
-      form.value.price = ''
-      form.value.type = ''
+const saveProduct = async () => {
+  await axios.post('/api/createOrUpdateProduct', { ...form.value }) 
+    .then(() => {
+      // Object.keys(form.value) => ['name','description','photo','type','quantity','price']
+      Object.keys(form.value).forEach(key => form.value[key] = "")
       router.push('/Admin/');
     })
      .catch(error => {
       showError();
      });
+     return 2
 };
 </script>
 
