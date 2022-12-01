@@ -12,7 +12,7 @@
       </template>
     </Toolbar>
     <div class="cards">
- 
+  
       <Card style="width: 32rem; margin-top: 1em">
         <h1>Add product</h1>
         <template #title>
@@ -95,7 +95,7 @@ const getPhoto = () => {
 
 
 const getSingleProduct = async () => {
-  const response = await axios.get(`/api/products/${props.id}`);
+  const response = await axios.get(`/api/editProduct/${props.id}`);
   form.value = response.data;
 };
 
@@ -112,7 +112,7 @@ const updateProduct = () => {
   //console.log(form.value.photo);
 
   //{...form.value}
-  axios.patch(`/api/products/${form.value.id}`, { ...form.value })
+  axios.post(`/api/updateProduct/${form.value.id}`, { ...form.value })
     .then(response => {
       (form.value.name = ''),
         (form.value.description = ''),

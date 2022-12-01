@@ -117,7 +117,7 @@ const newProduct = () => {
 };
 
 const getProducts = async () => {
-  const response = await axios.get('/api/products');
+  const response = await axios.get('/api/getProducts'); 
   products.value = response.data;
 };
 
@@ -129,7 +129,7 @@ const onEdit = id => {
   router.push(`/Admin/Edit/${id}`);
 };
 const deleteProduct = id => {
-  axios.delete(`/api/products/${id}`).then(() => {
+  axios.get(`/api/deleteProduct/${id}`).then(() => {
     getProducts();
   });
 };

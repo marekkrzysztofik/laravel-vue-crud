@@ -11,7 +11,7 @@
 
       </template>
     </Toolbar>
- 
+  
     <div class="cards">
 
       <Card style="width: 32rem; margin-top: 1em">
@@ -136,7 +136,7 @@ const saveProduct = () => {
   formData.append('type', form.value.type);
   formData.append('quantity', form.value.quantity);
   formData.append('price', form.value.price);
-  axios.post('/api/products', formData)
+  axios.post('/api/addProduct', formData)
     .then((response) => {
      
       form.value.name = ''
