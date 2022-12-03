@@ -95,14 +95,6 @@ const confirm2 = id => {
 
 const toast = useToast();
 
-const showSuccess = () => {
-  toast.add({
-    severity: 'success',
-    summary: 'Success Message',
-    detail: 'Message Content',
-    life: 3000,
-  });
-};
 const router = useRouter();
 const logout = (event, index) => {
   localStorage.removeItem('token');

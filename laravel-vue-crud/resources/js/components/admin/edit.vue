@@ -49,7 +49,7 @@
           <p></p>
           <Button class="p-button-rounded right"
             style="display: table-footer-group; top: 50px; left:60%; padding:10px 30px 10px 30px;" label="Save"
-            @click="updateProduct" />
+            @click="showSuccess" />
         </template>
       </Card>
 
@@ -59,11 +59,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
+import { inject } from 'vue';
 import {  usePhoto } from './composable.js'
 
-const { uploadPhoto, form } = usePhoto();
+const { uploadPhoto } = usePhoto();
+const {showSuccess, form, router} = inject('key');
 
 const logout = (event, index) => {
   localStorage.removeItem('token');
@@ -79,7 +80,6 @@ const props = defineProps({
     default: '',
   },
 });
-const router = useRouter();
 
 const getPhoto = () => {
   let photo = '/upload/image.png';
@@ -93,36 +93,11 @@ const getPhoto = () => {
   return photo;
 };
 
-
 const getSingleProduct = async () => {
   const response = await axios.get(`/api/editProduct/${props.id}`);
   form.value = response.data;
 };
 
-const updateProduct = () => {
-  axios.post('/api/createOrUpdateProduct', { ...form.value })
-    .then(() => {
-      (form.value.name = ''),
-        (form.value.description = ''),
-        (form.value.photo = ''),
-        (form.value.type = ''),
-        (form.value.quantity = ''),
-        (form.value.price = ''),
-        router.push('/Admin/');
-
-      // toast.fire({
-      //   icon: 'success',
-      //   title: 'Product edited successfully',
-      // });
-    })
-  // .catch(error => {
-  //   Swal.fire(
-  //     'Failed!',
-  //     'There was something wrong. Check if you filled name of the product.',
-  //     'warning'
-  //   );
-  // });
-};
 </script>
 
 <style scoped>

@@ -71,14 +71,13 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, reactive } from 'vue';
-import { useRouter } from 'vue-router';
-//import upload from '../../mixin/upload.js';
-import { useToast } from 'primevue/usetoast';
+import { ref, computed } from 'vue';
+import { inject } from 'vue';
 import {  usePhoto } from './composable.js'
 
-const { uploadPhoto, form } = usePhoto();
+const { uploadPhoto } = usePhoto();
 
+const {showSuccess, form, router} = inject('key');
 
 // wstęp do computed
 const firstName = ref("");
@@ -94,8 +93,6 @@ const concatNames = computed(() => {
   return `${firstName.value} ${lastName.value}`
 })
 
-
-const router = useRouter();
 const logout = (event, index) => {
   localStorage.removeItem('token');
   router.push('/Login');
@@ -112,21 +109,6 @@ const getPhoto = () => {
   }
   return photo;
 };
-const toast = useToast();
-
-const showSuccess = () => {
-  toast.add({
-    severity: 'success',
-    summary: 'Success !!!',
-    detail: 'Product added successfully',
-    life: 1000,
-  });
-  setTimeout(function (){
-    saveProduct()}, 1000);
-};
-const showError = () => {
-    toast.add({severity:'error', summary: 'Error', detail:'Saving product has failed!', life: 3000});
-} 
 
 const testGun = async () => {
   let a = 2
@@ -134,19 +116,6 @@ const testGun = async () => {
   a =+ 2
   console.log(a)
 }
-//const saveProduct = (isUpdated)
-const saveProduct = async () => {
-  await axios.post('/api/createOrUpdateProduct', { ...form.value }) 
-    .then(() => {
-      // Object.keys(form.value) => ['name','description','photo','type','quantity','price']
-      Object.keys(form.value).forEach(key => form.value[key] = "")
-      router.push('/Admin/');
-    })
-     .catch(error => {
-      showError();
-     });
-     return 2
-};
 </script>
 
 <style scoped>
