@@ -114,7 +114,6 @@ const getProducts = async () => {
 };
 
 const ourImage = img => {
-  console.log(img);
   return `/upload/${img}`;
 };
 const onEdit = id => {
