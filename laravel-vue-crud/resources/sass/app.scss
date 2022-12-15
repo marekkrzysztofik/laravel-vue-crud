@@ -1,6 +1,7 @@
 //fonts
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css');
-@import '../node_modules/bootstrap/scss/bootstrap';
+//@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css');
+//@import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/primeflex/primeflex.scss';
 
 * {
   margin: 0;
@@ -35,10 +36,11 @@ main h1 ~ p {
 
 .container {
   width: 100%;
-  max-width: 780px;
-  margin-top: 5rem;
+  max-width: 900px;
+  margin-top: 1rem;
   margin-left: auto;
   margin-right: auto;
+  
 }
 
 .my-3 {

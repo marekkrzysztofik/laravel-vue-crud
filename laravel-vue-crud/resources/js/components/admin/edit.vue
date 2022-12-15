@@ -1,120 +1,70 @@
 <template>
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
-      <router-link to="/" class="navbar-brand"> Home page</router-link>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <router-link to="/Register" class="nav-link">Register</router-link>
-        </li>
-      </ul>
-      <span class="navbar-text"> No siema </span>
-    </nav>
-    <div class="products__edit">
-      <div
-        class="products__create__titlebar dflex justify-content-between align-items-center">
-        <div class="products__create__titlebar--item">
-          <h1 class="my-1">Edit Product</h1>
-        </div>
-        <div class="products__create__titlebar--item">
-          <button class="btn btn-sec ml-1" @click="updateProduct()">
-            Save
-          </button>
-        </div>
-      </div>
+    <Home></Home>
+    <Toolbar>
+      <template #start>
+        <Button icon="pi pi-refresh" />
+        <i class="pi pi-bars p-toolbar-separator mr-2" />
+        <Button label="Log out" @click="logout" class="p-button-rounded" />
+        <i class="pi pi-bars p-toolbar-separator mr-2" />
+      </template>
+    </Toolbar>
+    <div class="cards">
+      <Card style="width: 32rem; margin-top: 1em">
+        <h1>Add product</h1>
+        <template #title> </template>
+        <template #content>
+          <h3>Name</h3>
+          <InputText class="width" type="text" v-model="form.name" />
 
-      <div class="products__create__cardWrapper mt-2">
-        <div class="products__create__main">
-          <div class="products__create__main--addInfo card py-2 px-2 bg-white">
-            <p class="mb-1">Name</p>
-            <input type="text" class="input" v-model="form.name" />
+          <h3>Description</h3>
+          <Textarea v-model="form.description" rows="7" cols="55" />
+          <FileUpload mode="basic" accept="image/*" @select="uploadPhoto" />
+          <img
+            class="products__create__main--media--images--item--img"
+            :src="getPhoto()" />
+        </template>
+      </Card>
 
-            <p class="my-1">Description (optional)</p>
-            <textarea
-              cols="10"
-              rows="5"
-              class="textarea"
-              v-model="form.description"></textarea>
+      <Card class="card-2" style="width: 22.5rem; margin-top: 1em">
+        <template #content>
+          <h3>Type</h3>
+          <InputText class="width" type="text" v-model="form.type" />
 
-            <div class="products__create__main--media--images mt-2">
-              <ul
-                class="products__create__main--media--images--list list-unstyled">
-                <li class="products__create__main--media--images--item">
-                  <div
-                    class="products__create__main--media--images--item--imgWrapper">
-                    <img
-                      class="products__create__main--media--images--item--img"
-                      :src="getPhoto()" />
-                  </div>
-                </li>
+          <h3>Inventory</h3>
+          <InputText class="width" type="text" v-model="form.quantity" />
 
-                <!-- upload image small -->
-                <li class="products__create__main--media--images--item">
-                  <form
-                    class="products__create__main--media--images--item--form">
-                    <label
-                      class="products__create__main--media--images--item--form--label"
-                      for="myfile"
-                      >Add Image</label
-                    >
-                    <input
-                      class="products__create__main--media--images--item--form--input"
-                      type="file"
-                      id="myfile"
-                      @change="updatePhoto" />
-                  </form>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="products__create__sidebar">
-          <!-- Product Organization -->
-          <div class="card py-2 px-2 bg-white">
-            <!-- Product unit -->
-            <div class="my-3">
-              <p>Product type</p>
-              <input type="text" class="input" v-model="form.type" />
-            </div>
-            <hr />
+          <h3>Price</h3>
+          <InputText class="width" type="text" v-model="form.price" />
 
-            <!-- Product invrntory -->
-            <div class="my-3">
-              <p>Inventory</p>
-              <input type="text" class="input" v-model="form.quantity" />
-            </div>
-            <hr />
-
-            <!-- Product Price -->
-            <div class="my-3">
-              <p>Price</p>
-              <input type="text" class="input" v-model="form.price" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Footer Bar -->
-      <div class="dflex justify-content-between align-items-center my-3">
-        <p></p>
-        <button class="btn" @click="updateProduct()">Save</button>
-      </div>
+          <Button
+            class="p-button-rounded right"
+            style="
+              display: table-footer-group;
+              top: 50px;
+              left: 60%;
+              padding: 10px 30px 10px 30px;
+            "
+            label="Save"
+            @click="showSuccess" />
+        </template>
+      </Card>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
+import { inject } from 'vue';
+import { usePhoto } from './composable.js';
 
-const form = ref({
-  id: '',
-  name: '',
-  description: '',
-  photo: '',
-  type: '',
-  quantity: '',
-  price: '',
-});
+const { uploadPhoto } = usePhoto();
+const { showSuccess, form, router } = inject('key');
 
+const logout = (event, index) => {
+  localStorage.removeItem('token');
+  router.push('/Login');
+};
 onMounted(async () => {
   getSingleProduct();
 });
@@ -125,7 +75,6 @@ const props = defineProps({
     default: '',
   },
 });
-const router = useRouter();
 
 const getPhoto = () => {
   let photo = '/upload/image.png';
@@ -139,52 +88,25 @@ const getPhoto = () => {
   return photo;
 };
 
-const updatePhoto = e => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  
-  reader.onloadend = file => {
-    form.value.photo = reader.result;
-  };
-  reader.readAsDataURL(file);
-};
-
 const getSingleProduct = async () => {
-  const response = await axios.get(`/api/products/${props.id}`);
+  const response = await axios.get(`/api/editProduct/${props.id}`);
   form.value = response.data;
 };
-
-const updateProduct = () => {
-  const formData = new FormData();
-  formData.append('name', form.value.name);
-  formData.append('description', form.value.description);
-  formData.append('photo', form.value.photo);
-  formData.append('type', form.value.type);
-  formData.append('quantity', form.value.quantity);
-  formData.append('price', form.value.price);
-
-  axios
-    .patch(`/api/products/${form.value.id}`, formData)
-    .then(response => {
-      (form.value.name = ''),
-        (form.value.description = ''),
-        (form.value.photo = ''),
-        (form.value.type = ''),
-        (form.value.quantity = ''),
-        (form.value.price = ''),
-        router.push('/Admin/');
-
-      toast.fire({
-        icon: 'success',
-        title: 'Product edited successfully',
-      });
-    })
-    .catch(error => {
-      Swal.fire(
-        'Failed!',
-        'There was something wrong. Check if you filled name of the product.',
-        'warning'
-      );
-    });
-};
 </script>
+
+<style scoped>
+h3 {
+  line-height: 3rem;
+}
+.width {
+  width: 80%;
+}
+
+.cards {
+  display: inline-flex;
+}
+
+.card-2 {
+  margin-left: 2%;
+}
+</style>

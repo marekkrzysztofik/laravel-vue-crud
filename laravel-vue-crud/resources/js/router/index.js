@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AdminHome from '../components/Admin/AdminHome.vue';
 import Home from '../components/Products/Home.vue';
+import HomePage from '../components/Products/HomePage.vue';
 import New from '../components/Admin/New.vue';
 import NotFound from '../components/NotFound.vue';
 import productEdit from '../components/Admin/Edit.vue';
@@ -10,8 +11,8 @@ import Register from '../components/Auth/Register.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'HomePage',
+    component: HomePage,
     meta: {
       requiresAuth: false,
     },
@@ -81,4 +82,4 @@ router.beforeEach((to, from) => {
   }
 });
 
-export default router;
+export default router; 

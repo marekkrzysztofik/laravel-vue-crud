@@ -1,24 +1,43 @@
 <template>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
-      <router-link to="/" class="navbar-brand"> Home page</router-link>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <router-link to="/Login" class="nav-link">Login</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/Register" class="nav-link">Register</router-link>
-        </li>
-      </ul>
-      <span class="navbar-text"> Log in to access app </span>
-    </nav>
-    <h1>Welcome to homepage</h1>
-  </div>
+  <TabMenu :model="items"> </TabMenu>
 </template>
-<style>
-.pasek {
-  padding: 1%;
-  width: 100%;
-  opacity: 0.8;
-}
-</style>
+<script>
+import { ref } from 'vue';
+import { defineComponent } from 'vue';
+export default defineComponent({
+  setup() {
+   
+    const items = ref([
+      {
+        label: 'Home',
+        icon: 'pi pi-home',
+        to: '/',
+      },
+      {
+        label: 'Login',
+        icon: 'pi pi-user',
+        to: '/Login',
+      },
+      {
+        label: 'Register',
+        icon: 'pi pi-user-plus',
+        to: '/Register',
+      },
+      {
+        label: 'Documentation',
+        icon: 'pi pi-fw pi-file',
+        to: '/documentation',
+      },
+      {
+        label: 'Settings',
+        icon: 'pi pi-fw pi-cog',
+        to: '/settings',
+      },
+    ]);
+    return {
+      items,
+    };
+  },
+});
+</script>
+

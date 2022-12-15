@@ -1,80 +1,53 @@
 <template>
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light pasek">
-      <router-link to="/" class="navbar-brand"> Home page</router-link>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <router-link to="/Register" class="nav-link">Register</router-link>
-        </li>
-      </ul>
-      <span class="navbar-text"> No siema </span>
-    </nav>
-    <h1>Welcome to admin overview</h1>
-    <div class="products__list table my-3 bg-grey">
-      <div
-        class="customers__titlebar dflex justify-content-between align-items-center">
-        <div class="customers__titlebar--item">
-          <h1 class="my-1">Products</h1>
-        </div>
-        <div class="customers__titlebar--item">
-          <button class="btn btn-sec my-1" @click="newProduct">
-            Add Product
-          </button>
-        </div>
-        <div class="customers__titlebar--item">
-          <button class="btn btn-sec my-1" @click="logout">Logout</button>
-        </div>
-      </div>
+    <Home></Home>
+    <DataTable :value="products" responsiveLayout="scroll">
+      <Toolbar>
+        <template #start>
+          <Button icon="pi pi-refresh" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          <Button label="Log out" @click="logout" class="p-button-rounded" />
+          <i class="pi pi-bars p-toolbar-separator mr-2" />
+          <Button
+            label="Add Product"
+            @click="newProduct"
+            class="p-button-rounded" />
+          <Toast />
+          <ConfirmDialog></ConfirmDialog>
+        </template>
+      </Toolbar>
 
-      <div
-        class="table--heading mt-2 products__list__heading"
-        style="padding-top: 20px; background: #fff">
-        <!-- <p class="table--heading--col1">&#32;</p> -->
-        <p class="table--heading--col1">image</p>
-        <p class="table--heading--col2">Product</p>
-        <p class="table--heading--col4">Type</p>
-        <p class="table--heading--col3">Inventory</p>
-        <!-- <p class="table--heading--col5">&#32;</p> -->
-        <p class="table--heading--col5">actions</p>
-      </div>
-
-      <!-- product 1 -->
-      <div
-        class="table--items products__list__item"
-        v-for="item in products"
-        :key="item.id"
-        v-if="products.length > 0">
-        <div class="products__list__item--imgWrapper">
+      <template #header>Products </template>
+      <Column field="id" header="ID"></Column>
+      <Column field="photo" header="Image">
+        <template #body="slotProps">
           <img
             class="products__list__item--img"
-            :src="ourImage(item.photo)"
-            style="height: 40px"
-            v-if="item.photo" />
-        </div>
-        <a href="# " class="table--items--col2">
-          {{ item.name }}
-        </a>
-        <p class="table--items--col2">
-          {{ item.type }}
-        </p>
-        <p class="table--items--col3">
-          {{ item.quantity }}
-        </p>
-        <div>
-          <button class="btn-icon btn-icon-success" @click="onEdit(item.id)">
-            <i class="fas fa-pencil-alt"></i>
+            :src="ourImage(slotProps.data.photo)" />
+        </template>
+      </Column>
+      <Column field="name" header="Name"></Column>
+      <Column field="type" header="Type"></Column>
+      <Column field="quantity" header="Inventory"></Column>
+
+      <Column header="Actions">
+        <template #body="btn">
+          <button
+            class="btn-icon btn-icon-success"
+            @click="onEdit(btn.data.id)">
+            <i class="pi pi-pencil"></i>
           </button>
           <button
             class="btn-icon btn-icon-danger"
-            @click="deleteProduct(item.id)">
-            <i class="far fa-trash-alt"></i>
+            @click="confirm2(btn.data.id)">
+            <i class="pi pi-ban"></i>
           </button>
-        </div>
-      </div>
-      <div class="table--items products__list__item" v-else>
-        <p>Product not found</p>
-      </div>
-    </div>
+        </template>
+      </Column>
+      <template #footer>
+        In total there are {{ products ? products.length : 0 }} products.
+      </template>
+    </DataTable>
   </div>
 </template>
 
@@ -89,61 +62,73 @@ h1 {
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-const router = useRouter();
+import { useToast } from 'primevue/usetoast';
+import { useConfirm } from 'primevue/useconfirm';
+import ConfirmDialog from 'primevue/confirmdialog';
 
-const logout = () => {
-  localStorage.removeItem('token');
-  router.push('/');
+const confirm = useConfirm();
+const confirm2 = id => {
+  confirm.require({
+    message: 'Do you want to delete this record?',
+    header: 'Delete Confirmation',
+    icon: 'pi pi-info-circle',
+    acceptClass: 'p-button-danger',
+    accept: () => {
+      toast.add({
+        severity: 'info',
+        summary: 'Confirmed',
+        detail: 'Record deleted',
+        life: 3000,
+      });
+      deleteProduct(id);
+    },
+    reject: () => {
+      toast.add({
+        severity: 'error',
+        summary: 'Rejected',
+        detail: 'You have rejected',
+        life: 3000,
+      });
+    },
+  });
 };
 
-const products = ref([]);
+const toast = useToast();
 
+const router = useRouter();
+const logout = (event, index) => {
+  localStorage.removeItem('token');
+  router.push('/Login');
+};
+const products = ref([]);
 onMounted(async () => {
   getProducts();
 });
-
 const newProduct = () => {
   router.push('/Admin/New');
 };
 
-const login = () => {
-  router.push('/Login');
-};
-
 const getProducts = async () => {
-  const response = await axios.get('/api/products');
+  const response = await axios.get('/api/getProducts'); 
   products.value = response.data;
 };
+
 const ourImage = img => {
   return `/upload/${img}`;
 };
-
 const onEdit = id => {
   router.push(`/Admin/Edit/${id}`);
 };
-
 const deleteProduct = id => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You can't go back",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: 'red',
-    cancelButtonText: 'No',
-    confirmButtonText: 'Yes, delete it!',
-  }).then(result => {
-    if (result.value) {
-      axios
-        .delete(`/api/products/${id}`)
-        .then(() => {
-          Swal.fire('Delete', 'Product delete successfully', 'success');
-          getProducts();
-        })
-        .catch(() => {
-          Swal.fire('Failed!', 'There was something wrong.', 'Warning');
-        });
-    }
+  axios.get(`/api/deleteProduct/${id}`).then(() => {
+    getProducts();
   });
 };
 </script>
+
+<style scoped>
+.flex {
+  width: 100%;
+  height: 100%;
+}
+</style>
